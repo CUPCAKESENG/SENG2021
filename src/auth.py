@@ -34,6 +34,8 @@ def login(email, password):
                     'user_id': user['user_id'],
                     'token': user['sessions'][-1]
                 }
+            return {} # this would be an input error for wrong email or password
+    return {} # this would be an input error for wrong email or password
 
 
 def generate_token(user):
