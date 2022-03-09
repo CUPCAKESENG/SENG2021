@@ -21,6 +21,9 @@ def create_json_report(report):
     if not os.path.exists("./communication_report"):
         os.makedirs("./communication_report")
 
+    if "id" not in report or "dump_time" not in report:
+        return False
+
     DATA_STORE_PATH = "./communication_report/" + str(report["id"]) + ".json"
 
     for file in os.listdir("./communication_report"):
