@@ -1,6 +1,6 @@
 import re
 from hashlib import sha3_512
-from jwt import encode
+#from jwt import encode
 from src.config import SALT
 from src.data_store import data
 
