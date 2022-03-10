@@ -1,16 +1,17 @@
 import json
 import os
 from datetime import datetime
+from jwt import encode
+from config import SALT, SECRET
 
 """
 Report structure:
     {
-        'id': 0,
         'file_size': 0,
         'file_name': '',
         'file_type': '',
         'sender': '',
-        'receieved_time': 0,
+        'received_time': 0,
         'created_time': 0,
         'dump_time': 0,
         'errors': []
@@ -21,14 +22,16 @@ def create_json_report(report):
     if not os.path.exists("./communication_report"):
         os.makedirs("./communication_report")
 
-    if "id" not in report or "dump_time" not in report:
+    if not all (key in report for key in ("sender", "received_time", "dump_time")):
         return False
 
-    DATA_STORE_PATH = "./communication_report/" + str(report["id"]) + ".json"
+    payload = {
+        'sender': report["sender"],
+        'time': str(report["received_time"])
+    }
+    token = encode(payload, SECRET)
 
-    for file in os.listdir("./communication_report"):
-        if file == (str(report["id"]) + ".json"):
-            return False
+    DATA_STORE_PATH = "./communication_report/" + token[-10:] + ".json"
 
     with open(DATA_STORE_PATH, "w") as FILE:
         report["dump_time"] = datetime.now()
