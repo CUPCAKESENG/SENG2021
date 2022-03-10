@@ -29,7 +29,7 @@ def login():
 @APP.route("/logout", methods=["POST"])
 def logout():
     info = request.get_json()
-    auth_logout_v1(info['token'])
+    logout(info['token'])
     return dumps({
 
     })    
@@ -40,6 +40,7 @@ def receive():
     ret = invoice_receive(info['invoice'], info['output-format'])
     return dumps({
         'output_report': ret['output-format'],
+        'invoice_id': ret['id'],
     })
 
 
