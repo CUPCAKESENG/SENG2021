@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+from error import PayloadError, FormatError
 from jwt import encode
 from config import SALT, SECRET
 
@@ -22,12 +23,12 @@ def create_json_report(report):
     if not os.path.exists("./communication_report"):
         os.makedirs("./communication_report")
 
-    if not all (key in report for key in ("sender", "received_time", "dump_time")):
-        return False
+    if not all (key in report for key in ("sender", "received_time")):
+        raise FormatError(description=f"Communication report is not in the right format.")
 
     payload = {
-        'sender': report["sender"],
-        'time': str(report["received_time"])
+        "sender": report["sender"],
+        "time": str(report["received_time"])
     }
     token = encode(payload, SECRET)
 
