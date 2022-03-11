@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/jaejeon/Documents/2022 T1/SENG2021/SENG2021/.venv/bin/python" "$0" "$@"
+'''exec' "/Users/jaejeon/Documents/2022 T1/SENG2021/testHeroku/.venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re
