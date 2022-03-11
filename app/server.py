@@ -51,5 +51,5 @@ def receive():
 
 
 
-if __name__ == "__main__":
-    APP.run()
+# if __name__ == "__main__":
+#     APP.run()
