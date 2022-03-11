@@ -10,7 +10,7 @@ APP = Flask(__name__)
 
 @APP.route("/")
 def home():
-  return {"message": "home sweet home"}
+  return "<h1>Testing</h1>"
 
 # @APP.route("/test", methods=["GET"])
 # def test():
