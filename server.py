@@ -2,12 +2,15 @@ from flask import Flask, request
 import json
 from json import dumps
 
-from src.auth import register, login, logout
+#from src.auth import register, login, logout
 
 
 
 APP = Flask(__name__)
 
+@APP.route("/")
+def home():
+  return {"message": "home sweet home"}
 
 @APP.route("/test", methods=["GET"])
 def test():
