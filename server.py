@@ -9,6 +9,9 @@ from src.auth import register, login, logout
 APP = Flask(__name__)
 
 
+@APP.route("/test", methods=["GET"])
+def test():
+  return {"message": "testing"}
 
 @APP.route("/register", methods=["POST"])
 def register():
