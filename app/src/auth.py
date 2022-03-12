@@ -5,7 +5,7 @@ File: auth.py
 """
 
 from app.src.data_store import data
-from app.src.error import FormatError
+from app.src.error import FormatError, AccessError
 from app.src.helpers import generate_token, is_valid, hash_password
 
 
@@ -29,6 +29,10 @@ def register(email, password, firstname, lastname):
     }
 
     if len(data['users']) > 1:
+        for user in datastore['users']:
+            if new_user['email'] == user['email']:
+                raise AccessError(description='This email is already registered. Please login instead.')
+
         new_user['user_id'] = data['users'][-1]['user_id'] + 1
     else:
         new_user['user_id'] = 0
@@ -54,8 +58,8 @@ def login(email, password):
                     'user_id': user['user_id'],
                     'token': user['sessions'][-1]
                 }
-            return {}  # this would be an input error for wrong email or password
-    return {}  # this would be an input error for wrong email or password
+            raise AccessError(description='Incorrect password, please try again.')
+    raise AccessError(description='This email has not been registered, please register and try again.')
 
 
 def logout(token):
