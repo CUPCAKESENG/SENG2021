@@ -1,48 +1,71 @@
-from flask import Flask, request
-import json
+"""
+SENG2021 - Group Cupcake
+File: main.py
+    Description: Defines routes for the server
+"""
+
 from json import dumps
+from flask import Flask, request
+# import json
 
 from app.src.auth import register, login, logout
+from app.src.receive import invoice_receive
 
 APP = Flask(__name__)
 
 @APP.route("/test", methods=["GET"])
 def test():
-  return {"message": "testing"}
+    """
+    Test Route
+    """
+    return {"message": "testing"}
 
 @APP.route("/register", methods=["POST"])
 def register_user():
-	new_user = request.get_json()
-	ret = register(new_user['email'].lower(), new_user['password'], new_user['firstname'].lower(), new_user['lastname'].lower())
-	return dumps({
-		'token': ret['token'],
-	})
+    """
+    Register route
+        Expected Input Payload: {email, password, firstname, lastname}
+        Returns: {user_id, token}
+    """
+    new_user = request.get_json()
+    ret = register(new_user['email'].lower(), new_user['password'],
+                   new_user['firstname'].lower(), new_user['lastname'].lower())
+    return dumps(ret)
 
 @APP.route('/login', methods=["POST"])
 def login_user():
-	info = request.get_json()
-	ret = login(info['email'].lower(), info['password'])
-	return dumps({
-		'token': ret['token'],
-	})
+    """
+    Login route
+        Expected Input Payload: {email, password}
+        Returns: {user_id, token}
+    """
+    info = request.get_json()
+    ret = login(info['email'].lower(), info['password'])
+    return dumps(ret)
 
 @APP.route("/logout", methods=["POST"])
 def logout_user():
-	info = request.get_json()
-	logout(info['token'])
-	return dumps({
+    """
+    Logout route
+        Expected Input Payload: {email, token}
+        Returns: {}
+    """
+    info = request.get_json()
+    logout(info['token'])
+    return dumps({
 
-	})    
+    })
 
 @APP.route("/invoice/receive", methods=["POST"])
 def receive():
-	info = request.get_json()
-	ret = invoice_receive(info['invoice'], info['output_format'])
-	return dumps({
-		'output_report': ret['output_format'],
-		'invoice_id': ret['id'],
-	})
-
+    """
+    Receive route
+        Expected Input Payload: {invoice}
+        Returns: {communication_report}
+    """
+    info = request.get_json()
+    ret = invoice_receive(info['invoice'], info['output_format'])
+    return dumps(ret)
 
 
 # if __name__ == "__main__":
