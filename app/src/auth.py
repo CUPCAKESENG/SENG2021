@@ -1,17 +1,16 @@
-import re
-from hashlib import sha3_512
-#from jwt import encode
-from src.config import SALT
-from src.data_store import data
+from app.src.data_store import data
+from app.src.error import PayloadError, FormatError
+from app.src.helpers import generate_token, is_valid, hash_password
 
-def register(email, password, last_name, first_name):
+def register(email, password, firstname, lastname):
     datastore = data
-    if not isValid(email):
+    if not is_valid(email):
         return {} # this would be an input error
     new_user = {
         'email': email,
-        'first_name': first_name,
-        'last_name': last_name,
+        'firstname': firstname,
+        'lastname': lastname,
+        'username': firstname + lastname,
         'sessions': [],
     }
     if len(data['users']) > 1:
@@ -21,16 +20,21 @@ def register(email, password, last_name, first_name):
     
     new_user['password'] = hash_password(password)
     datastore['users'].append(new_user)
-    return new_user
 
+    return login(email, password)
 
+def login(email, password):
+    for user in data['users']:
+        if user['email'] == email:
+            if user['password'] == hash_password(password):
+                user['sessions'].append(generate_token(user))
+                return {
+                    'user_id': user['user_id'],
+                    'token': user['sessions'][-1]
+                }
+            return {} # this would be an input error for wrong email or password
+    return {} # this would be an input error for wrong email or password
 
-def isValid(email):
-    regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
-    if re.fullmatch(regex, email):
-        return True
-    else:
-        return False
+def logout(email):
+    return {}
 
-def hash_password(password):
-    return sha3_512(f"{password}{SALT}".encode()).hexdigest()
