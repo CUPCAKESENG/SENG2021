@@ -6,8 +6,10 @@ File: main.py
 
 from json import dumps
 from flask import Flask, request
+import threading
 # import json
 
+from app.src.data_store import autosave
 from app.src.auth import register, login, logout
 from app.src.receive import invoice_receive
 
@@ -67,6 +69,8 @@ def receive():
     ret = invoice_receive(info['invoice'], info['output_format'])
     return dumps(ret)
 
+persist = threading.Thread(target=autosave, daemon=True)
+persist.start()
 
 # if __name__ == "__main__":
 #     APP.run()

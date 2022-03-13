@@ -5,6 +5,7 @@ File: helpers.py
 """
 
 import re
+from datetime import datetime, timedelta, timezone
 from random import randint
 from hashlib import sha3_512
 from jwt import encode
@@ -21,7 +22,9 @@ def generate_token(user):
     payload = {
         'sub': user['user_id'],
         'name': user['username'],
-        'wildcard': randint(-8096, 8096)
+        'wildcard': randint(-8096, 8096),
+        # Token expires after 20 minutes
+        'exp': datetime.now(tz=timezone.utc) + timedelta(minutes=20)
     }
     token = encode(payload, SECRET)
     return token
