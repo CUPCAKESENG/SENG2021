@@ -22,11 +22,13 @@ def create_json_report(report):
         os.makedirs("../communication_report")
 
     if not all (key in report for key in ("sender", "received_time")):
-        raise FormatError(description="Communication report is not in the right format.")
+        raise FormatError("Communication report is not in the right format.")
 
     payload = {
         "sender": report["sender"],
-        "time": report["received_time"]
+        "time": report["received_time"],
+        "file_size": os.path.getsize(report["path"]),
+        "file_name": report["filename"]
     }
     token = encode(payload, SECRET)
 
@@ -35,6 +37,5 @@ def create_json_report(report):
     with open(report_path, "w", encoding="ascii") as file:
         report["dump_time"] = datetime.now()
         json.dump(report, file, default=str)
-        file.close()
 
-    return report_path
+    return payload
