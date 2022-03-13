@@ -34,6 +34,9 @@ def set_data(updated):
 
     global DATA
     DATA = updated
+    with open('app/saves/data.p', 'wb+') as new_save:
+        pickle.dump(DATA, new_save)
+    
 
 def autosave():
     """

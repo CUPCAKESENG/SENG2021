@@ -11,7 +11,8 @@ from flask import Flask, request
 
 from app.src.data_store import autosave
 from app.src.auth import register, login, logout
-from app.src.receive import invoice_receive
+from app.src.error import PayloadError
+from app.src.invoice import receive, update, delete
 
 APP = Flask(__name__)
 
@@ -56,14 +57,21 @@ def logout_user():
     return dumps(logout(info['token']))
 
 @APP.route("/invoice/receive", methods=["POST"])
-def receive():
+def invoice_receive():
     """
     Receive route
         Expected Input Payload: {invoice}
         Returns: {communication_report}
     """
+    try:
+        invoice = request.files['invoice']
+        token = request.form['token']
+        output_format = request.form['output_format']
+    except:
+        raise PayloadError('Invalid receipt request')
+
     info = request.get_json()
-    ret = invoice_receive(info['invoice'], info['output_format'])
+    ret = receive(info['token'], info['invoice'], info['output_format'])
     return dumps(ret)
 
 persist = threading.Thread(target=autosave, daemon=True)

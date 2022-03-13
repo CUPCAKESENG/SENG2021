@@ -26,6 +26,7 @@ def register(email, password, firstname, lastname):
         'lastname': lastname,
         'username': firstname + lastname,
         'sessions': [],
+        'invoices': []
     }
 
     if len(datastore['users']) > 1:
