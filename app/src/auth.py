@@ -76,5 +76,13 @@ def logout(token):
         Errors: AccessError if token is timed out or already logged out.
                 FormatError if token is incorrect.
     """
-    output = decode_token(token)
-    return {output}
+    datastore = get_data()
+    details = decode_token(token)
+
+    if token in datastore['users'][details['id']]['sessions']:
+        datastore['users'][details['id']]['sessions'].remove(token)
+    else:
+        raise AccessError('This session token has already been logged out')
+
+    set_data(datastore)
+    return {}

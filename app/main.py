@@ -53,7 +53,6 @@ def logout_user():
         Returns: {}
     """
     info = request.get_json()
-    print(info)
     logout(info['token'])
     return dumps({
 

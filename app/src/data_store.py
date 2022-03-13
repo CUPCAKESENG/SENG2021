@@ -52,7 +52,7 @@ def autosave():
             old_data = pickle.load(old_save)
             DATA = old_data
         print('/// Save file loaded successfully')
-        print(DATA)
+        # print(DATA)
     except FileNotFoundError:
         print('!!! No saved save file detected. Please ensure that you are running the server from wsgi.py"')
 

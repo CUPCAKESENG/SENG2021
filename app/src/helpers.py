@@ -21,7 +21,7 @@ def generate_token(user):
         Errors: N/A
     """
     payload = {
-        'sub': user['user_id'],
+        'id': user['user_id'],
         'name': user['username'],
         'wildcard': randint(-8096, 8096),
         # Token expires after 20 minutes
