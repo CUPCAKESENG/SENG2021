@@ -22,3 +22,6 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint ./app
+    - name: Coverage
+      run: |
+        coverage run --source=. -m pytest
