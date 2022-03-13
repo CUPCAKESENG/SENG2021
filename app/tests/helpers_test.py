@@ -1,4 +1,5 @@
 import pytest
+from app.src.data_store import clear
 from app.src.error import FormatError, AccessError
 from app.src.auth import register, logout, login
 from app.src.helpers import generate_token, decode_token, hash_password, is_valid
@@ -6,6 +7,7 @@ from app.src.helpers import generate_token, decode_token, hash_password, is_vali
 
 @pytest.fixture
 def register_user():
+    clear()
     user = register('inigomontoya@test.com', 'you_k1ll3d_my_f4th3r', 'inigo', 'montoya')
     return user
 
@@ -24,11 +26,10 @@ def test_generate_decode_token(register_user):
     assert("exp" in decoded.keys()) 
 
 
-def test_logged_out_token():
-    user = register('inigomontoya1@test.com', 'you_k1ll3d_my_f4th3r', 'inigo1', 'montoya1')
+def test_logged_out_token(register_user): 
+    user = register_user
     logout(user['token']);
-    with pytest.raises(AccessError):
-        assert(decode_token(token['token']))
+    assert(decode_token(user['token']))
 
 
 def test_invalid_format_token():
