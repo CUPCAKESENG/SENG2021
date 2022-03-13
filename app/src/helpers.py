@@ -40,8 +40,7 @@ def decode_token(token):
                 FormatError if token is incorrect
     """
     try:
-        output = jwt.decode(token.encode('utf-8'),
-                            SECRET, algorithms=['HS256'])
+        output = jwt.decode(token, SECRET, algorithms=['HS256'])
         return output
     except jwt.ExpiredSignatureError as timeout:
         raise AccessError('This token has timed out, please login again') from timeout
