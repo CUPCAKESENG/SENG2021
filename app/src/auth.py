@@ -4,9 +4,9 @@ File: auth.py
     Description: Defines functions for auth server routes
 """
 
-from app.src.data_store import data
+from app.src.data_store import get_data, set_data
 from app.src.error import FormatError, AccessError
-from app.src.helpers import generate_token, is_valid, hash_password
+from app.src.helpers import decode_token, generate_token, is_valid, hash_password
 
 
 def register(email, password, firstname, lastname):
@@ -16,7 +16,7 @@ def register(email, password, firstname, lastname):
         Returns: {user_id, token}
         Errors: FormatError if email is invalid. InputError if user already exists.
     """
-    datastore = data
+    datastore = get_data()
     if not is_valid(email):
         raise FormatError('Invalid email ID. Please try again.')
 
@@ -28,17 +28,18 @@ def register(email, password, firstname, lastname):
         'sessions': [],
     }
 
-    if len(data['users']) > 1:
+    if len(datastore['users']) > 1:
         for user in datastore['users']:
             if new_user['email'] == user['email']:
                 raise AccessError('This email is already registered. Please login instead.')
 
-        new_user['user_id'] = data['users'][-1]['user_id'] + 1
+        new_user['user_id'] = datastore['users'][-1]['user_id'] + 1
     else:
         new_user['user_id'] = 0
 
     new_user['password'] = hash_password(password)
     datastore['users'].append(new_user)
+    set_data(datastore)
 
     return login(email, password)
 
@@ -50,10 +51,15 @@ def login(email, password):
         Returns: {user_id, token}
         Errors: InputError if email or password is incorrect.
     """
-    for user in data['users']:
+    datastore = get_data()
+
+    for user in datastore['users']:
         if user['email'] == email:
             if user['password'] == hash_password(password):
                 user['sessions'].append(generate_token(user))
+
+                set_data(datastore)
+
                 return {
                     'user_id': user['user_id'],
                     'token': user['sessions'][-1]
@@ -66,8 +72,9 @@ def logout(token):
     """
     Logout function
         Params: token
-        Returns: 200 OK
-        Errors: InputError if token is incorrect. FormatError if token is not a JWT.
+        Returns: N/A
+        Errors: AccessError if token is timed out or already logged out.
+                FormatError if token is incorrect.
     """
-
-    return {token}
+    output = decode_token(token)
+    return {output}

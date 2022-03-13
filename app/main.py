@@ -4,9 +4,9 @@ File: main.py
     Description: Defines routes for the server
 """
 
+import threading
 from json import dumps
 from flask import Flask, request
-import threading
 # import json
 
 from app.src.data_store import autosave
@@ -53,6 +53,7 @@ def logout_user():
         Returns: {}
     """
     info = request.get_json()
+    print(info)
     logout(info['token'])
     return dumps({
 
