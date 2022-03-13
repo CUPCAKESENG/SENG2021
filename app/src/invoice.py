@@ -46,6 +46,7 @@ def receive(token, invoice, output_format):
 
     report = {
         'path': save_path,
+        'filename': filename,
         'id': len(datastore['users'][user_id]['invoices']),
         'sender': datastore['users'][user_id]['username'],
         'received_time': save_time.strftime('%m/%d/%Y, %H:%M:%S'),
