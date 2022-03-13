@@ -53,10 +53,7 @@ def logout_user():
         Returns: {}
     """
     info = request.get_json()
-    logout(info['token'])
-    return dumps({
-
-    })
+    return dumps(logout(info['token']))
 
 @APP.route("/invoice/receive", methods=["POST"])
 def receive():

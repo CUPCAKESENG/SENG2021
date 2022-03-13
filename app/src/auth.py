@@ -31,7 +31,8 @@ def register(email, password, firstname, lastname):
     if len(datastore['users']) > 1:
         for user in datastore['users']:
             if new_user['email'] == user['email']:
-                raise AccessError('This email is already registered. Please login instead.')
+                raise AccessError(
+                    'This email is already registered. Please login instead.')
 
         new_user['user_id'] = datastore['users'][-1]['user_id'] + 1
     else:
@@ -65,7 +66,8 @@ def login(email, password):
                     'token': user['sessions'][-1]
                 }
             raise AccessError('Incorrect password, please try again.')
-    raise AccessError('This email has not been registered, please register and try again.')
+    raise AccessError(
+        'This email has not been registered, please register and try again.')
 
 
 def logout(token):
@@ -85,4 +87,4 @@ def logout(token):
         raise AccessError('This session token has already been logged out')
 
     set_data(datastore)
-    return {}
+    return {'message': 'Logout successful!'}
