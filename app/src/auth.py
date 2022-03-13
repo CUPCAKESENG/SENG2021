@@ -31,6 +31,7 @@ def register(email, password, firstname, lastname):
     if len(data['users']) > 1:
         for user in datastore['users']:
             if new_user['email'] == user['email']:
+                # pylint: disable=C0301
                 raise AccessError(description='This email is already registered. Please login instead.')
 
         new_user['user_id'] = data['users'][-1]['user_id'] + 1
@@ -59,6 +60,7 @@ def login(email, password):
                     'token': user['sessions'][-1]
                 }
             raise AccessError(description='Incorrect password, please try again.')
+    # pylint: disable=C0301
     raise AccessError(description='This email has not been registered, please register and try again.')
 
 
