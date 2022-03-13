@@ -6,6 +6,8 @@ File: data_store.py
 
 import time
 import pickle
+import os
+from werkzeug.utils import secure_filename
 
 DATA = {
     'users': []
@@ -66,3 +68,13 @@ def autosave():
             # print('/// Saved state')
 
         time.sleep(5)
+
+def clear():
+    """
+    Clear function
+        Params: N/A
+        Returns: N/A
+        Errors: N/A
+        Description: Clears data in data store.
+    """
+    set_data({"users": []})
