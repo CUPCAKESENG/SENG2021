@@ -1,3 +1,9 @@
+"""
+SENG2021 - Group Cupcake
+File: json_report.py
+    Description: Creates a JSON communication report
+"""
+
 import json
 import os
 from datetime import datetime
@@ -20,8 +26,8 @@ Report structure:
 """
 
 def create_json_report(report):
-    if not os.path.exists("./communication_report"):
-        os.makedirs("./communication_report")
+    if not os.path.exists("../communication_report"):
+        os.makedirs("../communication_report")
 
     if not all (key in report for key in ("sender", "received_time")):
         raise FormatError(description=f"Communication report is not in the right format.")
@@ -32,7 +38,7 @@ def create_json_report(report):
     }
     token = encode(payload, SECRET)
 
-    DATA_STORE_PATH = "./communication_report/" + token[-10:] + ".json"
+    DATA_STORE_PATH = "../communication_report/" + token[-10:] + ".json"
 
     with open(DATA_STORE_PATH, "w") as FILE:
         report["dump_time"] = datetime.now()
