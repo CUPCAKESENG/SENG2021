@@ -4,17 +4,20 @@ File: invoice.py
     Description: Defines the invoice functions
 """
 import os
+from datetime import datetime
+from time import strftime
 from werkzeug.utils import secure_filename
 
 from app.src.error import AccessError, FormatError
 from app.src.helpers import decode_token
 from app.src.data_store import set_data, get_data
+from app.src.json_report import create_json_report
 
 def receive(token, invoice, output_format):
     """
     Invoice Receive function
         Params: token, invoice, output_format
-        Returns: {user_id, token}
+        Returns: {communication_report}
         Errors: InputError if email or password is incorrect.
     """
     datastore = get_data()
@@ -40,19 +43,34 @@ def receive(token, invoice, output_format):
     filename = secure_filename(f"{datastore['users'][user_id]['username']}_{len(datastore['users'][user_id]['invoices'])}.xml")
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
+    save_time = datetime.now()
 
-    datastore['users'][user_id]['invoices'].append(save_path)
+    report = {
+        'path': save_path,
+        'id': len(datastore['users'][user_id]['invoices']),
+        'sender': datastore['users'][user_id]['username'],
+        'received_time': save_time.strftime('%m/%d/%Y, %H:%M:%S')
+    }
 
-    return {'message': 'Upload Success'}
+    datastore['users'][user_id]['invoices'].append(report)
+
+    return {'communication_report': create_json_report(report)}
 
 
-def update(token, invoice, output_format):
+def update(token, updated_invoice, invoice_id):
     """
     Invoice Update function
-        Params: invoice, output_format
+        Params: invoice_id, output_format
         Returns: {user_id, token}
-        Errors: InputError if email or password is incorrect.
+        Errors: AccessError if token is incorrect or invoice_id is invalid.
     """
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not(0 <= user_id < len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+    
+
 
 
 def delete(token, invoice):
@@ -60,7 +78,7 @@ def delete(token, invoice):
     Invoice Delete function
         Params: invoice, output_format
         Returns: {}
-        Errors: InputError if email or password is incorrect.
+        Errors: AccessError if token is incorrect.
     """
 
 def list(token):
@@ -68,7 +86,7 @@ def list(token):
     Invoice List Function
         Params: token
         Returns: invoices
-        Errors: InputError if email or password is incorrect.
+        Errors: AccessError if token is incorrect.
     """
     datastore = get_data()
     user_id = decode_token(token)['id']
