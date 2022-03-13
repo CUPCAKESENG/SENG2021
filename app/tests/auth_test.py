@@ -62,4 +62,28 @@ def test_incorrect_password(register_user):
     with pytest.raises(AccessError):
         assert(login('inigomontoya@test.com', 'akjlsndkjasnf'))
 
+  
+# testing login
+def test_login(register_user):
+
+    user = register_user
+    token = user['token']
+    #logout(token)
+
+    loginOutput = login('inigomontoya@test.com', 'you_k1ll3d_my_f4th3r')
+    assert('user_id' in loginOutput.keys())
+    assert('token' in loginOutput.keys())
+
+
+    logoutOutput = logout(loginOutput['token'])
+    print("logoutOutput: " + logoutOutput)
+    assert('user_id' not in loginOutput.keys())
+    assert('token' not in loginOutput.keys())
+
+
+
+
+
+
+
 
