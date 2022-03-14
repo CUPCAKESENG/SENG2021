@@ -3,13 +3,23 @@ SENG2021 - Group Cupcake
 File: auth_test.py
     Description: Static tests for auth.py code
 """
+import pytest
+from app.src.error import AccessError, FormatError
+from app.src.data_store import clear
+from app.src.auth import register, is_valid, login, logout
 
-import sys
-# from app.src.data_store import data
 
-from app.src.auth import register, is_valid
-# not sure how to properly Import  -> this is a temporary solution
-sys.path.insert(0, '..')
+@pytest.fixture
+def register_user():
+    clear()
+    register('inigomontoyaaa@test.com',
+             'you_k1ll3d_my_f4th3r', 'inaaigo', 'aamontoya')
+    user = register('inigomontoya@test.com',
+                    'you_k1ll3d_my_f4th3r', 'inigo', 'montoya')
+
+    register('inigaaaaaaomontoyaaa@test.com',
+             'you_k1ll3d_my_f4th3r', 'inaaaigo', 'aamontoya')
+    return user
 
 
 def test_valid_email():
@@ -25,11 +35,8 @@ def test_invalid_emails():
     Invalid Email Tests
         Checks if the is_valid function works
     """
-    assert not is_valid('123')
-    assert not is_valid('abc')
-    assert not is_valid('123@@@')
-    assert not is_valid('.com.com')
-    assert not is_valid('123testEmailhotmail.com')
+    with pytest.raises(FormatError):
+        assert(register('123', 'hahahah', 'aaa', 'aaaaaa'))
 
 
 def test_valid_registration():
@@ -50,13 +57,12 @@ def test_valid_registration():
     test_password = '123'
     test_firstname = 'John'
     test_lastname = 'Doe'
-
-    registered_user = register(
-        test_email, test_password, test_firstname, test_lastname)
-    print(registered_user, valid_user)
-    #self.assertEqual(registered_user, )
+    user = register(test_email, test_password, test_firstname, test_lastname)
+    assert('user_id' in user.keys())
+    assert('token' in user.keys())
 
 
-test_valid_email()
-test_invalid_emails()
-test_valid_registration()
+def test_incorrect_password(register_user):
+    user = register_user
+    with pytest.raises(AccessError):
+        assert(login('inigomontoya@test.com', 'akjlsndkjasnf'))

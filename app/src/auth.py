@@ -29,15 +29,12 @@ def register(email, password, firstname, lastname):
         'invoices': []
     }
 
-    if len(datastore['users']) > 1:
-        for user in datastore['users']:
-            if new_user['email'] == user['email']:
-                raise AccessError(
-                    'This email is already registered. Please login instead.')
+    for user in datastore['users']:
+        if new_user['email'] == user['email']:
+            raise AccessError(
+                'This email is already registered. Please login instead.')
 
-        new_user['user_id'] = datastore['users'][-1]['user_id'] + 1
-    else:
-        new_user['user_id'] = 0
+    new_user['user_id'] = len(datastore['users'])
 
     new_user['password'] = hash_password(password)
     datastore['users'].append(new_user)

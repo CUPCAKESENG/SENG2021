@@ -5,7 +5,6 @@ File: invoice.py
 """
 import os
 from datetime import datetime
-from time import strftime
 from werkzeug.utils import secure_filename
 
 from app.src.error import AccessError, FormatError
@@ -34,7 +33,7 @@ def receive(token, invoice, output_format):
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML') from e
 
-    if output_format not in [0, 1, 2]:
+    if output_format not in [1, 2]:
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML')
 
@@ -46,6 +45,7 @@ def receive(token, invoice, output_format):
 
     report = {
         'path': save_path,
+        'filename': filename,
         'id': len(datastore['users'][user_id]['invoices']),
         'sender': datastore['users'][user_id]['username'],
         'received_time': save_time.strftime('%m/%d/%Y, %H:%M:%S'),
@@ -63,16 +63,16 @@ def update(token, updated_invoice, invoice_id):
     """
     Invoice Update function
         Params: invoice_id, output_format
-        Returns: {communication_report}
+        Returns: {user_id, token}
         Errors: AccessError if token is incorrect or invoice_id is invalid.
     """
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not user_id in range(0, len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
-    if not invoice_id in range(0, len(datastore['users'][user_id]['invoices'])):
+    if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
         raise AccessError('Invalid invoice id')
 
     filename = secure_filename(
@@ -100,10 +100,10 @@ def delete(token, invoice_id):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not user_id in range(0, len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
-    if not invoice_id in range(0, len(datastore['users'][user_id]['invoices'])):
+    if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
         raise AccessError('Invalid invoice id')
 
     report = datastore['users'][user_id]['invoices'][invoice_id]
@@ -132,5 +132,7 @@ def list(token):
     for invoice in datastore["users"][user_id]['invoices']:
         if not invoice['deleted']:
             output.append(invoice)
+
+    print(output)
 
     return output
