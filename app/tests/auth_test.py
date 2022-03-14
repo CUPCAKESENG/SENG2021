@@ -70,30 +70,13 @@ def test_incorrect_password(register_user):
   
 # testing login
 def test_login(register_user):
-    dataStore = get_data()
-    print("A")
-    print(dataStore)
-
-    user = register_user
-    token = user['token']
-    #logout(token)
-
     loginOutput = login('inigomontoya@test.com', 'you_k1ll3d_my_f4th3r')
     assert('user_id' in loginOutput.keys())
     assert('token' in loginOutput.keys())
 
-    print("************************************loginOutput token***************************")
-    print(loginOutput['token'])
-
-    dataStore = get_data()
-    print("B ==========")
-    print(dataStore)
-    
-
     logoutOutput = logout(loginOutput['token'])
-    print("logoutOutput: " + logoutOutput)
-    assert('user_id' not in loginOutput.keys())
-    assert('token' not in loginOutput.keys())
+    assert(logoutOutput['message'] == 'Logout successful!')
+
 
 
 
