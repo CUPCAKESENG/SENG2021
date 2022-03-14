@@ -7,7 +7,7 @@ File: wsgi.py
 import sys
 import os
 
-from app.main import APP
+from app.main import app
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
@@ -15,4 +15,4 @@ if __name__ == "__main__":
             os.remove('app/saves/data.p')
             print('/// Cleared old save file')
 
-    APP.run()
+    app.run()
