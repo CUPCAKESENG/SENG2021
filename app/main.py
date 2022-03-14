@@ -86,7 +86,7 @@ def invoice_receive():
     ret = receive(token, invoice, output_format)
     return dumps(ret)
 
-@APP.route("/invoice/update", methods=["POST"])
+@app.route("/invoice/update", methods=["POST"])
 def invoice_update():
     """
     Receive route
@@ -109,7 +109,7 @@ def invoice_update():
     ret = update(token, invoice, invoice_id)
     return dumps(ret)
 
-@APP.route("/invoice/delete", methods=["POST"])
+@app.route("/invoice/delete", methods=["POST"])
 def invoice_delete():
     """
     Delete route
@@ -125,7 +125,7 @@ def invoice_delete():
 
     return dumps(delete(info['token'], info['invoice_id']))
 
-@APP.route("/invoice/list", methods=["POST"])
+@app.route("/invoice/list", methods=["POST"])
 def invoice_list():
     """
     Logout route
@@ -139,4 +139,4 @@ persist = threading.Thread(target=autosave, daemon=True)
 persist.start()
 
 # if __name__ == "__main__":
-#     APP.run()
+#     app.run()
