@@ -7,3 +7,4 @@ omit =
 	*data_store.py
 	wsgi.py
 	*invoice.py
+	*report.py
