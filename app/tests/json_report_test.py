@@ -5,6 +5,7 @@ File: json_report_test.py
 """
 
 from ast import For
+from collections import namedtuple
 import sys
 import os
 import json
@@ -27,19 +28,21 @@ def setup():
                      "Jerry", "Thompson")["token"]
     time = datetime.now()
     report = {
-        'file_size': 100,
-        'file_name': 'Report A',
+        'path': 'app/tests/files/sample.xml',
+        'filename': 'ReportA',
+        'id': 0,
         'sender': 'Owner',
         'received_time': str(time),
-        'created_time': str(time),
-        'dump_time': 0,
+        'output_format': 0,
+        'deleted': False
     }
     bad_report = {
-        'file_size': 150,
-        'file_name': 'Report B',
-        'sender': 'Owner',
-        'created_time': str(time),
-        'dump_time': 0,
+        'path': '',
+        'filename': 'ReportB',
+        'id': 0,
+        'received_time': str(time),
+        'output_format': 0,
+        'deleted': False
     }
 
     return {
@@ -55,10 +58,11 @@ def test_json_report(setup):
     Valid JSON Report Tests
         Checks if the json_create_report function works
     """
-    path = create_json_report(setup["report"])
-    with open(path, "r", encoding="ascii") as file:
+    name = "app/communication_report/" + create_json_report(setup["report"])["file_name"] + ".json"
+    with open(name, "r", encoding="ascii") as file:
         json_object = json.load(file)
-        assert json_object == setup["report"]
+        assert json_object["filename"] == setup["report"]["filename"]
+        assert json_object["received_time"] == setup["report"]["received_time"]
 
 def test_json_report_format_error(setup):
     """

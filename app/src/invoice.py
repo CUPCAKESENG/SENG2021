@@ -133,6 +133,6 @@ def list(token):
         if not invoice['deleted']:
             output.append(invoice)
 
-    print(output)
+    print(datastore["users"])
 
     return output

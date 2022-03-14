@@ -8,8 +8,8 @@ import json
 import os
 from datetime import datetime
 from jwt import encode
-from app.src.error import FormatError
-from app.src.config import SECRET
+from error import FormatError
+from config import SECRET
 
 def create_json_report(report):
     """
@@ -21,7 +21,7 @@ def create_json_report(report):
     if not os.path.exists("../communication_report"):
         os.makedirs("../communication_report")
 
-    if not all (key in report for key in ("sender", "received_time")):
+    if not all (key in report for key in ("sender", "received_time", "filename", "path")):
         raise FormatError("Communication report is not in the right format.")
 
     payload = {
@@ -39,3 +39,15 @@ def create_json_report(report):
         json.dump(report, file, default=str)
 
     return payload
+
+report = {
+    'path': 'app/tests/files/sample.xml',
+    'filename': 'ReportA',
+    'id': 0,
+    'sender': 'Owner',
+    'received_time': str(time),
+    'output_format': 0,
+    'deleted': False
+}
+
+print(create_json_report(report))
