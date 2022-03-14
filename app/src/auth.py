@@ -72,6 +72,8 @@ def login(email, password):
 
 
 def logout(token):
+    print("testing logout =====")
+    print(token)
     """
     Logout function
         Params: token
@@ -81,6 +83,10 @@ def logout(token):
     """
     datastore = get_data()
     details = decode_token(token)
+
+    print("################testin decode token################")
+    print(details)
+    print("################################################")
 
     if token in datastore['users'][details['id']]['sessions']:
         datastore['users'][details['id']]['sessions'].remove(token)

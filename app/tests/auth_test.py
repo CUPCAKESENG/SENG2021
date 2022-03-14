@@ -5,7 +5,7 @@ File: auth_test.py
 """
 import pytest
 from app.src.error import AccessError, FormatError
-from app.src.data_store import clear
+from app.src.data_store import clear, get_data
 from app.src.auth import register, is_valid, login, logout
 
 @pytest.fixture
@@ -65,6 +65,9 @@ def test_incorrect_password(register_user):
   
 # testing login
 def test_login(register_user):
+    dataStore = get_data()
+    print("A")
+    print(dataStore)
 
     user = register_user
     token = user['token']
@@ -74,6 +77,13 @@ def test_login(register_user):
     assert('user_id' in loginOutput.keys())
     assert('token' in loginOutput.keys())
 
+    print("************************************loginOutput token***************************")
+    print(loginOutput['token'])
+
+    dataStore = get_data()
+    print("B ==========")
+    print(dataStore)
+    
 
     logoutOutput = logout(loginOutput['token'])
     print("logoutOutput: " + logoutOutput)

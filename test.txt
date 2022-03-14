@@ -1,0 +1,77 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.8.5, pytest-6.1.1, py-1.9.0, pluggy-0.13.1
+rootdir: /Users/jaejeon/Documents/2022 T1/SENG2021/cupcake-deployment
+plugins: anyio-3.5.0
+collected 10 items
+
+app/tests/auth_test.py ....A
+{'users': [{'email': 'inigomontoyaaa@test.com', 'firstname': 'inaaigo', 'lastname': 'aamontoya', 'username': 'inaaigoaamontoya', 'sessions': ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluYWFpZ29hYW1vbnRveWEiLCJ3aWxkY2FyZCI6LTMyNzksImV4cCI6MTY0NzIxOTIwN30.jxtWVkwe7hFH0IAti9Y0276KLuHwBQWmK4QNIm6suXA'], 'invoices': [], 'user_id': 0, 'password': '7eb0750b08013ecccd8adc9b334f433344b81cae6895911f1255fa808530b0610def077dba2024ecd763f274af82aeeebe2e849269fabdcaa1384d97fcdbcc63'}, {'email': 'inigomontoya@test.com', 'firstname': 'inigo', 'lastname': 'montoya', 'username': 'inigomontoya', 'sessions': ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1MTg2LCJleHAiOjE2NDcyMTkyMDd9.liIXehI6GxajuGox-IYTLHTVcpKJmqcyEma5bfFg-Jw'], 'invoices': [], 'user_id': 0, 'password': '7eb0750b08013ecccd8adc9b334f433344b81cae6895911f1255fa808530b0610def077dba2024ecd763f274af82aeeebe2e849269fabdcaa1384d97fcdbcc63'}, {'email': 'inigaaaaaaomontoyaaa@test.com', 'firstname': 'inaaaigo', 'lastname': 'aamontoya', 'username': 'inaaaigoaamontoya', 'sessions': ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6ImluYWFhaWdvYWFtb250b3lhIiwid2lsZGNhcmQiOjM5NjYsImV4cCI6MTY0NzIxOTIwN30.-deImTSn6JSCAtyLXviaGZ8eNu8GG91XNhkZlXheWj8'], 'invoices': [], 'user_id': 1, 'password': '7eb0750b08013ecccd8adc9b334f433344b81cae6895911f1255fa808530b0610def077dba2024ecd763f274af82aeeebe2e849269fabdcaa1384d97fcdbcc63'}]}
+************************************loginOutput token***************************
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1OTE0LCJleHAiOjE2NDcyMTkyMDd9.bjMiP19kZ-QA2andK-NThMqORXaH2rchNtK-o7uf29U
+B ==========
+{'users': [{'email': 'inigomontoyaaa@test.com', 'firstname': 'inaaigo', 'lastname': 'aamontoya', 'username': 'inaaigoaamontoya', 'sessions': ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluYWFpZ29hYW1vbnRveWEiLCJ3aWxkY2FyZCI6LTMyNzksImV4cCI6MTY0NzIxOTIwN30.jxtWVkwe7hFH0IAti9Y0276KLuHwBQWmK4QNIm6suXA'], 'invoices': [], 'user_id': 0, 'password': '7eb0750b08013ecccd8adc9b334f433344b81cae6895911f1255fa808530b0610def077dba2024ecd763f274af82aeeebe2e849269fabdcaa1384d97fcdbcc63'}, {'email': 'inigomontoya@test.com', 'firstname': 'inigo', 'lastname': 'montoya', 'username': 'inigomontoya', 'sessions': ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1MTg2LCJleHAiOjE2NDcyMTkyMDd9.liIXehI6GxajuGox-IYTLHTVcpKJmqcyEma5bfFg-Jw', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1OTE0LCJleHAiOjE2NDcyMTkyMDd9.bjMiP19kZ-QA2andK-NThMqORXaH2rchNtK-o7uf29U'], 'invoices': [], 'user_id': 0, 'password': '7eb0750b08013ecccd8adc9b334f433344b81cae6895911f1255fa808530b0610def077dba2024ecd763f274af82aeeebe2e849269fabdcaa1384d97fcdbcc63'}, {'email': 'inigaaaaaaomontoyaaa@test.com', 'firstname': 'inaaaigo', 'lastname': 'aamontoya', 'username': 'inaaaigoaamontoya', 'sessions': ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6ImluYWFhaWdvYWFtb250b3lhIiwid2lsZGNhcmQiOjM5NjYsImV4cCI6MTY0NzIxOTIwN30.-deImTSn6JSCAtyLXviaGZ8eNu8GG91XNhkZlXheWj8'], 'invoices': [], 'user_id': 1, 'password': '7eb0750b08013ecccd8adc9b334f433344b81cae6895911f1255fa808530b0610def077dba2024ecd763f274af82aeeebe2e849269fabdcaa1384d97fcdbcc63'}]}
+testing logout =====
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1OTE0LCJleHAiOjE2NDcyMTkyMDd9.bjMiP19kZ-QA2andK-NThMqORXaH2rchNtK-o7uf29U
+F
+app/tests/helpers_test.py eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjotNTI0NywiZXhwIjoxNjQ3MjE5MjA3fQ.1fedXx7oVH9c-gRTy3C3_z5CvxyUQktxh0K-RTPmCa8
+.testing logout =====
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo2NTYxLCJleHAiOjE2NDcyMTkyMDd9.VGEvApdnPgn_mZGLjouue9gC5mU8fsG2YzhMEEHJhjg
+....
+
+=================================== FAILURES ===================================
+__________________________________ test_login __________________________________
+
+register_user = {'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1MTg2LCJleHAiOjE2NDcyMTkyMDd9.liIXehI6GxajuGox-IYTLHTVcpKJmqcyEma5bfFg-Jw', 'user_id': 0}
+
+    def test_login(register_user):
+    
+        dataStore = get_data()
+        print("A")
+        print(dataStore)
+    
+        user = register_user
+        token = user['token']
+        #logout(token)
+    
+        loginOutput = login('inigomontoya@test.com', 'you_k1ll3d_my_f4th3r')
+        assert('user_id' in loginOutput.keys())
+        assert('token' in loginOutput.keys())
+    
+        print("************************************loginOutput token***************************")
+        print(loginOutput['token'])
+    
+        dataStore = get_data()
+        print("B ==========")
+        print(dataStore)
+    
+    
+>       logoutOutput = logout(loginOutput['token'])
+
+app/tests/auth_test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MCwibmFtZSI6ImluaWdvbW9udG95YSIsIndpbGRjYXJkIjo1OTE0LCJleHAiOjE2NDcyMTkyMDd9.bjMiP19kZ-QA2andK-NThMqORXaH2rchNtK-o7uf29U'
+
+    def logout(token):
+        print("testing logout =====")
+        print(token)
+        """
+        Logout function
+            Params: token
+            Returns: N/A
+            Errors: AccessError if token is timed out or already logged out.
+                    FormatError if token is incorrect.
+        """
+        datastore = get_data()
+        details = decode_token(token)
+    
+        if token in datastore['users'][details['id']]['sessions']:
+            datastore['users'][details['id']]['sessions'].remove(token)
+        else:
+>           raise AccessError('This session token has already been logged out')
+E           app.src.error.AccessError: 403 Forbidden: This session token has already been logged out
+
+app/src/auth.py:90: AccessError
+=========================== short test summary info ============================
+FAILED app/tests/auth_test.py::test_login - app.src.error.AccessError: 403 Fo...
+========================= 1 failed, 9 passed in 0.15s ==========================
