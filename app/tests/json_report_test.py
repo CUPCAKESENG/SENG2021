@@ -29,7 +29,7 @@ def setup():
     time = datetime.now()
     report = {
         'path': 'app/tests/files/sample.xml',
-        'filename': 'ReportA',
+        'filename': 'sample',
         'id': 0,
         'sender': 'Owner',
         'received_time': str(time),
@@ -37,8 +37,8 @@ def setup():
         'deleted': False
     }
     bad_report = {
-        'path': '',
-        'filename': 'ReportB',
+        'path': 'app/tests/files/sample.xml',
+        'filename': 'sample',
         'id': 0,
         'received_time': str(time),
         'output_format': 0,
@@ -58,7 +58,7 @@ def test_json_report(setup):
     Valid JSON Report Tests
         Checks if the json_create_report function works
     """
-    name = "app/communication_report/" + create_json_report(setup["report"])["file_name"] + ".json"
+    name = "app/communication_report/" + create_json_report(setup["report"])["token"] + ".json"
     with open(name, "r", encoding="ascii") as file:
         json_object = json.load(file)
         assert json_object["filename"] == setup["report"]["filename"]
