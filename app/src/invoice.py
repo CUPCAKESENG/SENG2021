@@ -5,7 +5,6 @@ File: invoice.py
 """
 import os
 from datetime import datetime
-from time import strftime
 from werkzeug.utils import secure_filename
 
 from app.src.error import AccessError, FormatError
@@ -133,5 +132,7 @@ def list(token):
     for invoice in datastore["users"][user_id]['invoices']:
         if not invoice['deleted']:
             output.append(invoice)
+
+    print(output)
 
     return output
