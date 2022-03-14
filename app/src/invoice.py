@@ -39,6 +39,9 @@ def receive(token, invoice, output_format):
 
     filename = secure_filename(
         f"{datastore['users'][user_id]['username']}_{len(datastore['users'][user_id]['invoices'])}.xml")
+
+    if not os.path.exists('app/invoices_received'):
+        os.mkdir('app/invoices_received')
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
     save_time = datetime.now()
