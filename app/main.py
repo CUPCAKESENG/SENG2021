@@ -89,25 +89,36 @@ def invoice_update():
     try:
         token = request.form['token']
         invoice = request.files['invoice']
-        output_format = request.form['output_format']
+        invoice_id = request.form['invoice_id']
     except Exception as e:
         raise PayloadError(
-            'Invalid receipt request, please send token, invoice and output_format as form fields') from e
+            'Invalid receipt request, please send token, invoice and invoice_id as form fields') from e
 
-    ret = update(token, invoice, output_format)
+    try:
+        invoice_id = int(invoice_id)
+    except ValueError as not_an_int:
+        raise PayloadError('invoice_id must be an integer!') from not_an_int
+
+    ret = update(token, invoice, invoice_id)
     return dumps(ret)
 
-@APP.route("/logout", methods=["POST"])
+@APP.route("/invoice/delete", methods=["POST"])
 def invoice_delete():
     """
-    Logout route
+    Delete route
         Expected Input Payload: {token, invoice_id}
         Returns: {message}
     """
     info = request.get_json()
+
+    try:
+        info['invoice_id'] = info['invoice_id']
+    except ValueError as not_an_int:
+        raise PayloadError('invoice_id must be an integer!') from not_an_int
+
     return dumps(delete(info['token'], info['invoice_id']))
 
-@APP.route("/logout", methods=["POST"])
+@APP.route("/invoice/list", methods=["POST"])
 def invoice_list():
     """
     Logout route
