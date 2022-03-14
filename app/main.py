@@ -12,7 +12,7 @@ from flask import Flask, request
 from app.src.data_store import autosave
 from app.src.auth import register, login, logout
 from app.src.error import PayloadError
-from app.src.invoice import receive  # , update, delete
+from app.src.invoice import receive, update, delete, list
 
 APP = Flask(__name__)
 
@@ -65,7 +65,7 @@ def logout_user():
 def invoice_receive():
     """
     Receive route
-        Expected Input Payload: {invoice}
+        Expected Input Payload: {token, invoice, output_format}
         Returns: {communication_report}
     """
     try:
@@ -79,6 +79,43 @@ def invoice_receive():
     ret = receive(token, invoice, output_format)
     return dumps(ret)
 
+@APP.route("/invoice/update", methods=["POST"])
+def invoice_update():
+    """
+    Receive route
+        Expected Input Payload: {token, invoice, invoice_id}
+        Returns: {communication_report}
+    """
+    try:
+        token = request.form['token']
+        invoice = request.files['invoice']
+        output_format = request.form['output_format']
+    except Exception as e:
+        raise PayloadError(
+            'Invalid receipt request, please send token, invoice and output_format as form fields') from e
+
+    ret = update(token, invoice, output_format)
+    return dumps(ret)
+
+@APP.route("/logout", methods=["POST"])
+def invoice_delete():
+    """
+    Logout route
+        Expected Input Payload: {token, invoice_id}
+        Returns: {message}
+    """
+    info = request.get_json()
+    return dumps(delete(info['token'], info['invoice_id']))
+
+@APP.route("/logout", methods=["POST"])
+def invoice_list():
+    """
+    Logout route
+        Expected Input Payload: {token}
+        Returns: {message}
+    """
+    info = request.get_json()
+    return dumps(list(info['token']))
 
 persist = threading.Thread(target=autosave, daemon=True)
 persist.start()
