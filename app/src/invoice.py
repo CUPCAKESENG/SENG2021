@@ -125,7 +125,7 @@ def list(token):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not user_id in range(datastore['users']):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
     output = []
