@@ -40,7 +40,7 @@ def create_json_report(report):
     print(report_path)
 
     with open(report_path, "w", encoding="ascii") as file:
-        report["dump_time"] = datetime.now()
+        report["dump_time"] = datetime.now().strftime('%m/%d/%Y, %H:%M:%S')
         json.dump(report, file, default=str)
 
     return payload

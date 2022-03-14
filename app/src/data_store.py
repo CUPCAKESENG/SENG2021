@@ -62,7 +62,8 @@ def autosave():
         # print(DATA)
     except FileNotFoundError:
         print('!!! No saved save file detected. Please ensure that you are running the server from wsgi.py"')
-        os.mkdir('app/saves')
+        if not os.path.exists('app/saves'):
+            os.mkdir('app/saves')
 
     while True:
         with open('app/saves/data.p', 'wb+') as new_save:
