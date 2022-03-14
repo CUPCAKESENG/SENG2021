@@ -8,8 +8,8 @@ import json
 import os
 from datetime import datetime
 from jwt import encode
-from error import FormatError
-from config import SECRET
+from app.src.error import FormatError
+from app.src.config import SECRET
 
 def create_json_report(report):
     """

@@ -5,4 +5,5 @@ omit =
 	*test*
 	*main.py
 	*data_store.py
+	*invoice.py
 	wsgi.py
