@@ -26,7 +26,9 @@ def create_json_report(report):
 
     payload = {
         "sender": report["sender"],
-        "time": report["received_time"]
+        "time": report["received_time"],
+        "file_size": os.path.getsize(report["path"]),
+        "file_name": report["filename"]
     }
     token = encode(payload, SECRET)
 

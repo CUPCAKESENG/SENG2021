@@ -5,13 +5,13 @@ File: invoice.py
 """
 import os
 from datetime import datetime
-from time import strftime
 from werkzeug.utils import secure_filename
 
 from app.src.error import AccessError, FormatError
 from app.src.helpers import decode_token
 from app.src.data_store import set_data, get_data
 from app.src.json_report import create_json_report
+
 
 def receive(token, invoice, output_format):
     """
@@ -24,35 +24,37 @@ def receive(token, invoice, output_format):
     user_id = decode_token(token)['id']
 
     # Is there a situation that this is needed?
-    if not(0 <= user_id < len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
-
-    if invoice.content_type != 'application/xml':
-        raise FormatError('The invoice must be an XML document')
 
     try:
         output_format = int(output_format)
     except Exception as e:
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML') from e
-    
-    if output_format not in [0, 1, 2]:
+
+    if output_format not in [1, 2]:
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML')
 
-    filename = secure_filename(f"{datastore['users'][user_id]['username']}_{len(datastore['users'][user_id]['invoices'])}.xml")
+    filename = secure_filename(
+        f"{datastore['users'][user_id]['username']}_{len(datastore['users'][user_id]['invoices'])}.xml")
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
     save_time = datetime.now()
 
     report = {
         'path': save_path,
+        'filename': filename,
         'id': len(datastore['users'][user_id]['invoices']),
         'sender': datastore['users'][user_id]['username'],
-        'received_time': save_time.strftime('%m/%d/%Y, %H:%M:%S')
+        'received_time': save_time.strftime('%m/%d/%Y, %H:%M:%S'),
+        'output_format': output_format,
+        'deleted': False
     }
 
     datastore['users'][user_id]['invoices'].append(report)
+    set_data(datastore)
 
     return {'communication_report': create_json_report(report)}
 
@@ -67,19 +69,50 @@ def update(token, updated_invoice, invoice_id):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not(0 <= user_id < len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
-    
+
+    if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
+        raise AccessError('Invalid invoice id')
+
+    filename = secure_filename(
+        f"{datastore['users'][user_id]['username']}_{invoice_id}.xml")
+    save_path = os.path.join('app/invoices_received', filename)
+    updated_invoice.save(save_path)
+    save_time = datetime.now()
+
+    report = datastore['users'][user_id]['invoices'][invoice_id]
+    report['received_time'] = save_time.strftime('%m/%d/%Y, %H:%M:%S')
+
+    datastore['users'][user_id]['invoices'][invoice_id] = report
+    set_data(datastore)
+
+    return {'communication_report': create_json_report(report)}
 
 
-
-def delete(token, invoice):
+def delete(token, invoice_id):
     """
     Invoice Delete function
         Params: invoice, output_format
         Returns: {}
         Errors: AccessError if token is incorrect.
     """
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
+        raise AccessError('Invalid invoice id')
+
+    report = datastore['users'][user_id]['invoices'][invoice_id]
+    report['deleted'] = True
+    datastore['users'][user_id]['invoices'][invoice_id] = report
+    set_data(datastore)
+
+    return {'message': 'deletion success'}
+
 
 def list(token):
     """
@@ -91,9 +124,15 @@ def list(token):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not(0 <= user_id < len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
-    for user in datastore["users"]:
-        if user["user_id"] == user_id:
-            return user["invoices"]
+    output = []
+
+    for invoice in datastore["users"][user_id]['invoices']:
+        if not invoice['deleted']:
+            output.append(invoice)
+
+    print(output)
+
+    return output
