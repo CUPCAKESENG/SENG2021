@@ -34,7 +34,7 @@ def receive(token, invoice, output_format):
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML') from e
 
-    if output_format not in [0, 1, 2]:
+    if output_format not in [1, 2]:
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML')
 
@@ -70,10 +70,10 @@ def update(token, updated_invoice, invoice_id):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not user_id in range(0, len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
-    if not invoice_id in range(0, len(datastore['users'][user_id]['invoices'])):
+    if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
         raise AccessError('Invalid invoice id')
 
     filename = secure_filename(
@@ -101,10 +101,10 @@ def delete(token, invoice_id):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not user_id in range(0, len(datastore['users'])):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
-    if not invoice_id in range(0, len(datastore['users'][user_id]['invoices'])):
+    if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
         raise AccessError('Invalid invoice id')
 
     report = datastore['users'][user_id]['invoices'][invoice_id]
@@ -125,7 +125,7 @@ def list(token):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
-    if not user_id in range(datastore['users']):
+    if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
 
     output = []

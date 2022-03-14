@@ -8,13 +8,17 @@ from app.src.error import AccessError, FormatError
 from app.src.data_store import clear, get_data
 from app.src.auth import register, is_valid, login, logout
 
+
 @pytest.fixture
 def register_user():
     clear()
-    register('inigomontoyaaa@test.com', 'you_k1ll3d_my_f4th3r', 'inaaigo', 'aamontoya')
-    user = register('inigomontoya@test.com', 'you_k1ll3d_my_f4th3r', 'inigo', 'montoya')
+    register('inigomontoyaaa@test.com',
+             'you_k1ll3d_my_f4th3r', 'inaaigo', 'aamontoya')
+    user = register('inigomontoya@test.com',
+                    'you_k1ll3d_my_f4th3r', 'inigo', 'montoya')
 
-    register('inigaaaaaaomontoyaaa@test.com', 'you_k1ll3d_my_f4th3r', 'inaaaigo', 'aamontoya')
+    register('inigaaaaaaomontoyaaa@test.com',
+             'you_k1ll3d_my_f4th3r', 'inaaaigo', 'aamontoya')
     return user
 
 
@@ -33,7 +37,8 @@ def test_invalid_emails():
     """
     with pytest.raises(FormatError):
         assert(register('123', 'hahahah', 'aaa', 'aaaaaa'))
-    
+
+
 def test_valid_registration():
     """
     Valid Registration Tests

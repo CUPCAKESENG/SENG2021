@@ -3,3 +3,5 @@
 __pycache__/
 app/saves/data.p
 *.swp
+
+app/invoices_received/
