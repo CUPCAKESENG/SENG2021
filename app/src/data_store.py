@@ -13,6 +13,7 @@ DATA = {
     'users': []
 }
 
+
 def get_data():
     """
     Get Data function
@@ -24,6 +25,7 @@ def get_data():
 
     global DATA
     return DATA
+
 
 def set_data(updated):
     """
@@ -38,7 +40,7 @@ def set_data(updated):
     DATA = updated
     with open('app/saves/data.p', 'wb+') as new_save:
         pickle.dump(DATA, new_save)
-    
+
 
 def autosave():
     """
@@ -50,7 +52,7 @@ def autosave():
     """
     global DATA
 
-    time.sleep(2) # Let the server startup text show properly
+    time.sleep(2)  # Let the server startup text show properly
     # On program launch, will see if there is a pre-existing save
     try:
         with open('app/saves/data.p', 'rb') as old_save:
@@ -69,6 +71,7 @@ def autosave():
             # print('/// Saved state')
 
         time.sleep(5)
+
 
 def clear():
     """
