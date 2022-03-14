@@ -14,10 +14,10 @@ from app.src.auth import register, login, logout
 from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
 
-APP = Flask(__name__)
+app = Flask(__name__)
 
 
-@APP.route("/test", methods=["GET"])
+@app.route("/test", methods=["GET"])
 def test():
     """
     Test Route
@@ -25,7 +25,7 @@ def test():
     return {"message": "testing"}
 
 
-@APP.route("/register", methods=["POST"])
+@app.route("/register", methods=["POST"])
 def register_user():
     """
     Register route
@@ -38,7 +38,7 @@ def register_user():
     return dumps(ret)
 
 
-@APP.route('/login', methods=["POST"])
+@app.route('/login', methods=["POST"])
 def login_user():
     """
     Login route
@@ -50,7 +50,7 @@ def login_user():
     return dumps(ret)
 
 
-@APP.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["POST"])
 def logout_user():
     """
     Logout route
@@ -61,7 +61,7 @@ def logout_user():
     return dumps(logout(info['token']))
 
 
-@APP.route("/invoice/receive", methods=["POST"])
+@app.route("/invoice/receive", methods=["POST"])
 def invoice_receive():
     """
     Receive route
@@ -79,7 +79,7 @@ def invoice_receive():
     ret = receive(token, invoice, output_format)
     return dumps(ret)
 
-@APP.route("/invoice/update", methods=["POST"])
+@app.route("/invoice/update", methods=["POST"])
 def invoice_update():
     """
     Receive route
@@ -102,7 +102,7 @@ def invoice_update():
     ret = update(token, invoice, invoice_id)
     return dumps(ret)
 
-@APP.route("/invoice/delete", methods=["POST"])
+@app.route("/invoice/delete", methods=["POST"])
 def invoice_delete():
     """
     Delete route
@@ -118,7 +118,7 @@ def invoice_delete():
 
     return dumps(delete(info['token'], info['invoice_id']))
 
-@APP.route("/invoice/list", methods=["POST"])
+@app.route("/invoice/list", methods=["POST"])
 def invoice_list():
     """
     Logout route
@@ -132,4 +132,4 @@ persist = threading.Thread(target=autosave, daemon=True)
 persist.start()
 
 # if __name__ == "__main__":
-#     APP.run()
+#     app.run()
