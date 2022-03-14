@@ -24,8 +24,8 @@ def setup():
     clear()
     token = register("owner@streams.com.au", "i am the owner",
                      "Jerry", "Thompson")["token"]
-    invoice = open("app/invoices_received/sample.xml", "r")
-    wrong_format = open("app/invoices_received/a.txt", "r")
+    invoice = open("app/tests/files/sample.xml", "r")
+    wrong_format = open("app/tests/files/a.txt", "r")
     updated_invoice = open("app/tests/files/updated_invoice.xml", "r")
     wrong_format_2 = open("app/tests/files/b.txt", "r")
     receive_url = "http://localhost:5000/invoice/receive"
