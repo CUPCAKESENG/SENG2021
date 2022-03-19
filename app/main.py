@@ -110,9 +110,8 @@ def invoice_delete():
         Returns: {message}
     """
     info = request.get_json()
-
     try:
-        info['invoice_id'] = info['invoice_id']
+        info['invoice_id'] = int(info['invoice_id'])
     except ValueError as not_an_int:
         raise PayloadError('invoice_id must be an integer!') from not_an_int
 

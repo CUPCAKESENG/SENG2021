@@ -35,7 +35,7 @@ def receive(token, invoice, output_format):
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML') from e
 
-    if output_format not in [1, 2]:
+    if output_format not in [0, 1, 2]:
         raise FormatError(
             'The output format must be\n\t[0] - JSON\n\t[1] - PDF\n\t[2] - HTML')
 
@@ -80,6 +80,9 @@ def update(token, updated_invoice, invoice_id):
     if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
         raise AccessError('Invalid invoice id')
 
+    if datastore['users'][user_id]['invoices'][invoice_id]['deleted']:
+        raise AccessError('The requested invoice id has been deleted, please upload again.')
+
     filename = secure_filename(
         f"{datastore['users'][user_id]['username']}_{invoice_id}.xml")
     save_path = os.path.join('app/invoices_received', filename)
@@ -111,10 +114,16 @@ def delete(token, invoice_id):
     if not invoice_id in range(len(datastore['users'][user_id]['invoices'])):
         raise AccessError('Invalid invoice id')
 
+    if datastore['users'][user_id]['invoices'][invoice_id]['deleted']:
+        raise AccessError('The requested invoice id has already been deleted.')
+
     report = datastore['users'][user_id]['invoices'][invoice_id]
     report['deleted'] = True
     datastore['users'][user_id]['invoices'][invoice_id] = report
     set_data(datastore)
+
+    if os.path.exists(report['path']):
+        os.remove(report['path'])
 
     return {'message': 'deletion success'}
 
