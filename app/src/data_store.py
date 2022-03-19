@@ -7,7 +7,6 @@ File: data_store.py
 import time
 import pickle
 import os
-from werkzeug.utils import secure_filename
 
 DATA = {
     'users': []
@@ -61,8 +60,9 @@ def autosave():
         print('/// Save file loaded successfully')
         # print(DATA)
     except FileNotFoundError:
-        print('!!! No saved save file detected. Please ensure that you are running the server from wsgi.py"')
-        os.mkdir('app/saves')
+        print('!!! No saved save file detected. Please ensure that any saves are stored in app/saves"')
+        if not os.path.exists('app/saves'):
+            os.mkdir('app/saves')
 
     while True:
         with open('app/saves/data.p', 'wb+') as new_save:

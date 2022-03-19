@@ -18,24 +18,25 @@ def create_json_report(report):
         Returns: report_path
         Errors: FormatError
     """
-    if not os.path.exists("../communication_report"):
-        os.makedirs("../communication_report")
+    if not os.path.exists("app/communication_report"):
+        os.makedirs("app/communication_report")
 
     if not all (key in report for key in ("sender", "received_time", "filename", "path")):
         raise FormatError("Communication report is not in the right format.")
 
     payload = {
         "sender": report["sender"],
-        "time": report["received_time"],
-        "file_size": os.path.getsize(report["path"]),
+        "received_time": report["received_time"],
+        "save_time": report["save_time"],
+        "file_size": report["file_size"],
         "file_name": report["filename"]
     }
     token = encode(payload, SECRET)
 
-    report_path = "../communication_report/" + token[-10:] + ".json"
+    report_path = "app/communication_report/" + token[-10:] + ".json"
 
     with open(report_path, "w", encoding="ascii") as file:
-        report["dump_time"] = datetime.now()
+        report["access_time"] = datetime.now().strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3]
         json.dump(report, file, default=str)
 
     return payload

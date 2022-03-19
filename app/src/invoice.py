@@ -23,6 +23,8 @@ def receive(token, invoice, output_format):
     datastore = get_data()
     user_id = decode_token(token)['id']
 
+    received_time = datetime.now()
+
     # Is there a situation that this is needed?
     if not user_id in range(len(datastore['users'])):
         raise AccessError('Invalid user ID or token')
@@ -42,14 +44,17 @@ def receive(token, invoice, output_format):
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
     save_time = datetime.now()
+    print(save_time)
 
     report = {
         'path': save_path,
         'filename': filename,
         'id': len(datastore['users'][user_id]['invoices']),
-        'sender': datastore['users'][user_id]['username'],
-        'received_time': save_time.strftime('%m/%d/%Y, %H:%M:%S'),
+        'sender': f"{datastore['users'][user_id]['firstname'].capitalize()} {datastore['users'][user_id]['lastname'].capitalize()}",
+        'received_time': received_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3],
+        'save_time': save_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3],
         'output_format': output_format,
+        'file_size': f"{os.path.getsize(save_path)} bytes",
         'deleted': False
     }
 
