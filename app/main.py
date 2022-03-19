@@ -9,7 +9,7 @@ from json import dumps
 from flask import Flask, request
 # import json
 
-from app.src.data_store import autosave
+from app.src.data_store import autosave, clean_tokens
 from app.src.auth import register, login, logout
 from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
@@ -130,6 +130,9 @@ def invoice_list():
 
 persist = threading.Thread(target=autosave, daemon=True)
 persist.start()
+
+cleanup = threading.Thread(target=clean_tokens, daemon=True)
+cleanup.start()
 
 # if __name__ == "__main__":
 #     app.run()
