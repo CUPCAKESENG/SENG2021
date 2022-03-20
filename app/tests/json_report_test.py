@@ -4,17 +4,14 @@ File: json_report_test.py
     Description: Static tests for json_report.py code
 """
 
-from ast import For
-from collections import namedtuple
 import sys
-import os
 import json
 from app.src.error import FormatError
 import pytest
 from datetime import datetime
 # from app.src.data_store import data
 
-from app.src.auth import register, is_valid
+from app.src.auth import register
 from app.src.data_store import clear
 from app.src.json_report import create_json_report
 # not sure how to properly Import  -> this is a temporary solution

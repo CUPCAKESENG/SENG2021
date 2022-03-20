@@ -39,7 +39,7 @@ def create_json_report(report):
     report_path = "app/communication_report/" + token[-10:] + ".json"
 
     with open(report_path, "w", encoding="ascii") as file:
-        report["dump_time"] = datetime.now()
+        report["access_time"] = datetime.now().strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3]
         json.dump(report, file, default=str)
 
     return payload
