@@ -5,3 +5,5 @@ app/saves/data.p
 *.swp
 
 app/invoices_received/*.xml
+
+app/communication_report/

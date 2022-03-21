@@ -7,7 +7,9 @@ File: data_store.py
 import time
 import pickle
 import os
-from werkzeug.utils import secure_filename
+import jwt
+
+from app.src.config import SECRET
 
 DATA = {
     'users': []
@@ -42,6 +44,33 @@ def set_data(updated):
         pickle.dump(DATA, new_save)
 
 
+def clean_tokens():
+    """
+    Clean tokens function
+        Params: N/A
+        Returns: N/A
+        Errors: N/A
+        Description: Clears tokens that are expired from the data store every 10 minutes.
+    """
+    datastore = get_data()
+
+    time.sleep(60)  # Wait for datastore to be imported
+
+    while True:
+        for user in datastore['users']:
+            for token in user['sessions']:
+                try:
+                    jwt.decode(token, SECRET, algorithms=['HS256'])
+                except jwt.ExpiredSignatureError as timeout:
+                    datastore['users'][user['user_id']
+                                       ]['sessions'].remove(token)
+                    print(
+                        f'\\\\\\ Token {token[:5]} has been cleared due to expiry')
+
+        set_data(datastore)
+        time.sleep(10*60)  # Run once every 10 minutes
+
+
 def autosave():
     """
     Autosave function
@@ -57,18 +86,18 @@ def autosave():
     try:
         with open('app/saves/data.p', 'rb') as old_save:
             old_data = pickle.load(old_save)
-            DATA = old_data
+            set_data(old_data)
         print('/// Save file loaded successfully')
         # print(DATA)
     except FileNotFoundError:
-        print('!!! No saved save file detected. Please ensure that you are running the server from wsgi.py"')
+        print('!!! No saved save file detected. Please ensure that any saves are stored in app/saves"')
         if not os.path.exists('app/saves'):
             os.mkdir('app/saves')
 
     while True:
         with open('app/saves/data.p', 'wb+') as new_save:
-            pickle.dump(DATA, new_save)
-            # print(f'\nSaved data - {data}\n')  # for debugging
+            pickle.dump(get_data(), new_save)
+            # print(f'\nSaved data - {DATA}\n')  # for debugging
             # print('/// Saved state')
 
         time.sleep(5)
