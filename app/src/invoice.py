@@ -44,7 +44,6 @@ def receive(token, invoice, output_format):
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
     save_time = datetime.now()
-    print(save_time)
 
     report = {
         'path': save_path,
@@ -146,7 +145,5 @@ def list(token):
     for invoice in datastore["users"][user_id]['invoices']:
         if not invoice['deleted']:
             output.append(invoice)
-
-    print(datastore["users"])
 
     return output

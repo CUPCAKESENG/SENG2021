@@ -9,7 +9,7 @@ from json import dumps
 from flask import Flask, request
 # import json
 
-from app.src.data_store import autosave, clean_tokens
+from app.src.data_store import autosave, clean_tokens, clear
 from app.src.auth import register, login, logout
 from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
@@ -102,7 +102,7 @@ def invoice_update():
     ret = update(token, invoice, invoice_id)
     return dumps(ret)
 
-@app.route("/invoice/delete", methods=["POST"])
+@app.route("/invoice/delete", methods=["DELETE"])
 def invoice_delete():
     """
     Delete route
@@ -117,15 +117,20 @@ def invoice_delete():
 
     return dumps(delete(info['token'], info['invoice_id']))
 
-@app.route("/invoice/list", methods=["POST"])
+@app.route("/invoice/list", methods=["GET"])
 def invoice_list():
     """
     Logout route
         Expected Input Payload: {token}
         Returns: {message}
     """
-    info = request.get_json()
-    return dumps(list(info['token']))
+    token = request.args.get('token')
+    response = list(token)
+    return dumps(response)
+
+@app.route("/clear", methods=["DELETE"])
+def user_clear():
+    return dumps(clear())
 
 persist = threading.Thread(target=autosave, daemon=True)
 persist.start()
