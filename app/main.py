@@ -7,6 +7,7 @@ File: main.py
 import threading
 from json import dumps
 from flask import Flask, request
+from flask_cors import CORS
 # import json
 
 from app.src.data_store import autosave, clean_tokens, clear
@@ -15,7 +16,7 @@ from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/test", methods=["GET"])
 def test():
