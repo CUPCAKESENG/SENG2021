@@ -1,4 +1,4 @@
-.venv/
+.venv/*
 .venv
 __pycache__/
 app/saves/data.p
@@ -7,3 +7,5 @@ app/saves/data.p
 app/invoices_received/*.xml
 
 app/communication_report/
+
+.coverage

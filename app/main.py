@@ -1,3 +1,6 @@
+
+
+
 """
 SENG2021 - Group Cupcake
 File: main.py
@@ -16,6 +19,10 @@ from app.src.invoice import receive, update, delete, list
 
 app = Flask(__name__)
 
+
+@app.route('/')
+def index():
+  return "<h1>Cupcake</h1>"
 
 @app.route("/test", methods=["GET"])
 def test():

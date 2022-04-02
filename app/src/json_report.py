@@ -27,8 +27,9 @@ def create_json_report(report):
 
     payload = {
         "sender": report["sender"],
-        "time": report["received_time"],
-        "file_size": os.path.getsize(report["path"]),
+        "received_time": report["received_time"],
+        "save_time": report["save_time"],
+        "file_size": report["file_size"],
         "file_name": report["filename"],
         "file_type": "XML"
     }
