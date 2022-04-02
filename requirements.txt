@@ -11,4 +11,6 @@ MarkupSafe==2.1.0
 pycparser==2.21
 PyJWT==2.3.0
 pytest==7.1.0
+reportlab==3.6.9
+svglib==1.2.1
 Werkzeug==2.0.3

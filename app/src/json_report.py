@@ -16,7 +16,7 @@ def create_json_report(report):
     """
     Creates JSON communication report.
         Params: report
-        Returns: report_path
+        Returns: payload
         Errors: FormatError
     """
     if not os.path.exists("app/communication_report"):

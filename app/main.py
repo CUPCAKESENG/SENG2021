@@ -75,6 +75,7 @@ def invoice_receive():
         Expected Input Payload: {token, invoice, output_format}
         Returns: {communication_report}
     """
+    print(request.files)
     try:
         token = request.form['token']
         invoice = request.files['invoice']
