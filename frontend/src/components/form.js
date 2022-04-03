@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import ButtonGroup from '@atlaskit/button/button-group';
 import LoadingButton from '@atlaskit/button/loading-button';
@@ -17,8 +17,14 @@ import Form, {
   ValidMessage,
 } from '@atlaskit/form';
 
-const FormDefaultExample = () => (
-  <div
+const FormDefaultExample = (props) => {
+  
+
+  const handleChangeUsername = (event) => {
+    props.onChange()
+  };
+
+  return (<div
     style={{
       display: 'flex',
       width: '400px',
@@ -29,7 +35,12 @@ const FormDefaultExample = () => (
   >
     <Form
       onSubmit={(data) => {
-        console.log('form data', data);
+        const registrationDetails = {
+          username: data.username,
+          password: data.password
+        }
+        props.onChange(registrationDetails);
+
         return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
           data.username === 'error' ? { username: 'IN_USE' } : undefined,
         );
@@ -39,7 +50,6 @@ const FormDefaultExample = () => (
         <form {...formProps}>
           <FormHeader
             title="Sign in"
-            description="* indicates a required field"
           />
           <FormSection>
             <Field
@@ -52,11 +62,6 @@ const FormDefaultExample = () => (
               {({ fieldProps, error }) => (
                 <Fragment>
                   <TextField autoComplete="off" {...fieldProps} />
-                  {!error && (
-                    <HelperMessage>
-                      You can use letters, numbers and periods.
-                    </HelperMessage>
-                  )}
                   {error && (
                     <ErrorMessage>
                       This username is already in use, try another one.
@@ -90,9 +95,6 @@ const FormDefaultExample = () => (
                         Password needs to be more than 8 characters.
                       </ErrorMessage>
                     )}
-                    {valid && meta.dirty ? (
-                      <ValidMessage>Awesome password!</ValidMessage>
-                    ) : null}
                   </Fragment>
                 );
               }}
@@ -106,8 +108,10 @@ const FormDefaultExample = () => (
               )}
             </CheckboxField>
           </FormSection>
-
+          
+          <Button appearance="subtle-link" style={{position: "relative", top:58, left:-12}}>Register</Button>
           <FormFooter>
+            
             <ButtonGroup>
               <Button appearance="subtle">Cancel</Button>
               <LoadingButton
@@ -123,6 +127,7 @@ const FormDefaultExample = () => (
       )}
     </Form>
   </div>
-);
+  );
+}
 
 export default FormDefaultExample;
