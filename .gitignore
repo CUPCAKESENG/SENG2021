@@ -1,3 +1,5 @@
+.venv/*
+.venv
 __pycache__/
 app/saves/data.p
 *.swp
@@ -6,4 +8,4 @@ app/invoices_received/*.xml
 
 app/communication_report/
 
-.venv/bin/
+.coverage

@@ -25,7 +25,7 @@ def generate_token(user):
         'name': user['username'],
         'wildcard': randint(-8096, 8096),
         # Token expires after 20 minutes
-        'exp': datetime.now(tz=timezone.utc) + timedelta(minutes=20)
+        'exp': datetime.now(tz=timezone.utc) + timedelta(minutes=60)
     }
     token = jwt.encode(payload, SECRET)
     return token
