@@ -16,19 +16,20 @@ def create_json_report(report):
     """
     Creates JSON communication report.
         Params: report
-        Returns: report_path
+        Returns: payload
         Errors: FormatError
     """
-    if not os.path.exists("app/communication_report"):
-        os.makedirs("app/communication_report")
 
-    if not all(key in report for key in ("sender", "received_time", "filename", "path")):
+    required_keys = ("sender", "received_time", "save_time", "file_size", "filename", "path")
+
+    if not all(key in report for key in required_keys):
         raise FormatError("Communication report is not in the right format.")
 
     payload = {
         "sender": report["sender"],
-        "time": report["received_time"],
-        "file_size": os.path.getsize(report["path"]),
+        "received_time": report["received_time"],
+        "save_time": report["save_time"],
+        "file_size": report["file_size"],
         "file_name": report["filename"],
         "file_type": "XML"
     }

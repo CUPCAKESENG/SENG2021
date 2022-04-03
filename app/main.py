@@ -1,3 +1,6 @@
+
+
+
 """
 SENG2021 - Group Cupcake
 File: main.py
@@ -7,6 +10,7 @@ File: main.py
 import threading
 from json import dumps
 from flask import Flask, request
+from flask_cors import CORS
 # import json
 
 from app.src.data_store import autosave, clean_tokens, clear
@@ -15,7 +19,11 @@ from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
 
 app = Flask(__name__)
+CORS(app)
 
+@app.route('/')
+def index():
+  return "<h1>Cupcake</h1>"
 
 @app.route("/test", methods=["GET"])
 def test():
@@ -68,6 +76,7 @@ def invoice_receive():
         Expected Input Payload: {token, invoice, output_format}
         Returns: {communication_report}
     """
+    
     try:
         token = request.form['token']
         invoice = request.files['invoice']
@@ -77,7 +86,11 @@ def invoice_receive():
             'Invalid receipt request, please send token, invoice and output_format as form fields') from e
 
     ret = receive(token, invoice, output_format)
-    return dumps(ret)
+    
+    if output_format != 0:
+        return ret
+    else:
+        return dumps(ret)
 
 @app.route("/invoice/update", methods=["POST"])
 def invoice_update():
