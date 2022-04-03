@@ -5,3 +5,5 @@ app/saves/data.p
 app/invoices_received/*.xml
 
 app/communication_report/
+
+.venv/bin/
