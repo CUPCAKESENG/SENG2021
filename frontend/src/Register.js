@@ -1,8 +1,9 @@
+import { RegisterForm } from "./components/registerForm"
 
-export const Register = () => {
+export const Register = (props) => {
   return (
     <>
-      <text>Register</text>
+      <RegisterForm navigate={props.navigate}/>
     </>
   )
 }

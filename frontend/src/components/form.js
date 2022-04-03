@@ -20,9 +20,19 @@ import Form, {
 const FormDefaultExample = (props) => {
   
 
-  const handleChangeUsername = (event) => {
-    props.onChange()
+  const handleChangeUsername = (data) => {
+    const registrationDetails = {
+      username: data.username,
+      password: data.password
+    }
+    props.onChange(registrationDetails);
+    props.gotoRegister('/dashboard');
   };
+
+  const handleRedirectRegister = () => {
+    console.log("props: ", props);
+    props.gotoRegister('/register');
+  }
 
   return (<div
     style={{
@@ -35,11 +45,7 @@ const FormDefaultExample = (props) => {
   >
     <Form
       onSubmit={(data) => {
-        const registrationDetails = {
-          username: data.username,
-          password: data.password
-        }
-        props.onChange(registrationDetails);
+        handleChangeUsername(data);
 
         return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
           data.username === 'error' ? { username: 'IN_USE' } : undefined,
@@ -109,7 +115,7 @@ const FormDefaultExample = (props) => {
             </CheckboxField>
           </FormSection>
           
-          <Button appearance="subtle-link" style={{position: "relative", top:58, left:-12}}>Register</Button>
+          <Button appearance="subtle-link" style={{position: "relative", top:58, left:-12}} onClick={handleRedirectRegister}>Register</Button>
           <FormFooter>
             
             <ButtonGroup>
