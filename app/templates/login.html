@@ -33,14 +33,7 @@
                                         <div class="mb-3"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small"></div>
-                                        </div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="color: white;background: #1995d6;font-weight: bold;font-size: 12.8px;--bs-primary: #1995d6;--bs-primary-rgb: 25,149,214;border: 4px none #1995d6;" id="loginBurron">Login</button>
-
-                                        <script>
-                                            document.getElementById("loginButton").addEventListener("click", myFunction);  
-                                            function myFunction() {  
-                                              window.location.href="http://example.com";  
-                                            }
-                                        </script>
+                                        </div><a class="btn btn-primary d-block btn-user w-100" type="submit" style="color: white;background: #1995d6;font-weight: bold;font-size: 12.8px;--bs-primary: #1995d6;--bs-primary-rgb: 25,149,214;border: 4px none #1995d6;" id="loginButton" onclick="loginPlease();">Login</a>
                                         <hr>
                                     </form>
                                     <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
@@ -55,6 +48,11 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script>
+        function loginPlease() {  
+          window.location.href="index.html";  
+        }
+    </script>
 </body>
 
 </html>
