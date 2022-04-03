@@ -55,11 +55,13 @@ def test_json_report(setup):
     Valid JSON Report Tests
         Checks if the json_create_report function works
     """
-    name = "app/communication_report/" + create_json_report(setup["report"])["token"] + ".json"
+    name = "app/communication_report/" + \
+        create_json_report(setup["report"])["token"] + ".json"
     with open(name, "r", encoding="ascii") as file:
         json_object = json.load(file)
         assert json_object["filename"] == setup["report"]["filename"]
         assert json_object["received_time"] == setup["report"]["received_time"]
+
 
 def test_json_report_format_error(setup):
     """

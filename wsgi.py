@@ -29,4 +29,4 @@ if __name__ == "__main__":
             print('/// Cleared old save files')
             
 
-    app.run()
+    app.run(debug=True)
