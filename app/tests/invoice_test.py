@@ -8,7 +8,6 @@ from ast import For
 from doctest import REPORT_CDIFF
 import sys
 import os
-from app.src.error import AccessError, FormatError
 import pytest
 import json
 import requests
@@ -16,11 +15,8 @@ import time
 # from app.src.data_store import data
 
 from app.src.error import PayloadError, FormatError, AccessError
-from app.src.auth import register, is_valid
-from app.src.data_store import clear
-from app.src.helpers import decode_token
-from app.src.data_store import get_data
-from app.src.invoice import delete, receive, update, list
+from app.src.invoice import receive, update
+from app.tests.request_wrappers import register_v1, delete_v1, list_v1, clear_v1
 # not sure how to properly Import  -> this is a temporary solution
 sys.path.insert(0, '..')
 
@@ -33,37 +29,6 @@ def process_status_code(response):
         raise AccessError(description=response.reason)
 
     return response.json()
-
-def register_v1(email, password, firstname, lastname):
-    response = requests.post("http://localhost:5000/register", json={
-        "email": email,
-        "password": password,
-        "firstname": firstname,
-        "lastname": lastname
-    })
-    process_status_code(response)
-    data = response.json()
-    return data
-
-def delete_v1(token, invoice_id):
-    response = requests.delete("http://localhost:5000/invoice/delete", json={
-        "token": token,
-        "invoice_id": invoice_id
-    })
-    process_status_code(response)
-    data = response.json()
-    return data
-
-def list_v1(token):
-    response = requests.get("http://localhost:5000/invoice/list", params={
-        "token": token
-    })
-    process_status_code(response)
-    data = response.json()
-    return data
-
-def clear_v1():
-    requests.delete("http://localhost:5000/clear")
 
 @pytest.fixture
 def setup():
@@ -112,11 +77,6 @@ def test_format_error_receive(setup):
     Error Receive Tests
         Checks if receive raises FormatError
     """
-    """
-    with pytest.raises(FormatError):
-        requests.post(setup["receive_url"], files={
-                  "invoice": setup["wrong_format"]}, data={"token":setup["token"], "output_format": "0"})
-    """
 
     with pytest.raises(FormatError):
         response = requests.post(setup["receive_url"], files={
@@ -133,13 +93,6 @@ def test_format_error_receive(setup):
                       "invoice": setup["invoice"]}, data={"token":"bad token", "output_format": "0"})
         process_status_code(response)
 
-
-def test_access_error_receive(setup):
-    """
-    Error Receive Tests
-        Checks if receive raises AccessError
-    """
-
 def test_update(setup):
     """
     Valid Update Tests
@@ -150,23 +103,14 @@ def test_update(setup):
                   "invoice": setup["invoice"]}, data={"token":setup["token"], "output_format": "0"})
     invoice = list_v1(setup["token"])[0]
     assert invoice["path"] == "app/invoices_received\\jerrythompson_0.xml"
-    print(list_v1(setup["token"]))
     original_time = os.path.getmtime(invoice["path"])
 
     requests.post(setup["update_url"], files={
                   "invoice": setup["updated_invoice"]}, data={"token":setup["token"], "invoice_id": "0"})
     
-    print(list_v1(setup["token"]))
     invoice = list_v1(setup["token"])[0]
     assert invoice["path"] == "app/invoices_received\\jerrythompson_0.xml"
     assert os.path.getmtime(invoice["path"]) > original_time
-
-
-def test_format_error_update(setup):
-    """
-    Error Update Tests
-        Checks if update returns FormatError
-    """
 
 def test_access_error_update(setup):
     """
@@ -233,12 +177,6 @@ def test_list_v1(setup):
     assert invoice[1]["deleted"] == False
     assert invoice[1]["sender"] == "Jerry Thompson"
 
-def test_access_error_list_v1(setup):
-    """
-    Error list_v1 Tests
-        Checks if list_v1 returns AccessError
-    """
-
 def test_delete_v1(setup):
     """
     Valid delete_v1 Tests
@@ -279,9 +217,3 @@ def test_access_error_delete_v1(setup):
     delete_v1(setup["token"], "0")
     with pytest.raises(AccessError):
         delete_v1(setup["token"], "0")
-
-def test_payload_error_delete_v1(setup):
-    """
-    Error delete_v1 Tests
-        Checks if delete_v1 returns PayloadError
-    """
