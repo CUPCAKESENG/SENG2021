@@ -75,7 +75,7 @@ def invoice_receive():
         Expected Input Payload: {token, invoice, output_format}
         Returns: {communication_report}
     """
-    print(request.files)
+    
     try:
         token = request.form['token']
         invoice = request.files['invoice']
@@ -85,7 +85,11 @@ def invoice_receive():
             'Invalid receipt request, please send token, invoice and output_format as form fields') from e
 
     ret = receive(token, invoice, output_format)
-    return dumps(ret)
+    
+    if output_format != 0:
+        return ret
+    else:
+        return dumps(ret)
 
 @app.route("/invoice/update", methods=["POST"])
 def invoice_update():

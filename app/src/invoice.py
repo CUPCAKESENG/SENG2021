@@ -6,11 +6,13 @@ File: invoice.py
 import os
 from datetime import datetime
 from werkzeug.utils import secure_filename
+from flask import send_file
 
 from app.src.error import AccessError, FormatError
 from app.src.helpers import decode_token
 from app.src.data_store import set_data, get_data
 from app.src.json_report import create_json_report
+from app.src.pdf_report import create_pdf_report
 
 
 def receive(token, invoice, output_format):
@@ -42,6 +44,9 @@ def receive(token, invoice, output_format):
     filename = secure_filename(
         f"{datastore['users'][user_id]['username']}_{len(datastore['users'][user_id]['invoices'])}.xml")
 
+    if not os.path.exists('app/communication_report'):
+        os.makedirs('app/communication_report')
+
     if not os.path.exists('app/invoices_received'):
         os.mkdir('app/invoices_received')
     save_path = os.path.join('app/invoices_received', filename)
@@ -61,7 +66,18 @@ def receive(token, invoice, output_format):
     }
 
     datastore['users'][user_id]['invoices'].append(report)
+    # print('Receive is the issue')
     set_data(datastore)
+
+    if output_format == 1:
+        location = os.path.join(os.getcwd(), 'app', 'communication_report', create_pdf_report(report))
+
+        try:
+            # print(location+'\n')
+            return send_file(location, as_attachment=True)
+        except Exception as e:
+            print(e)
+            raise AccessError('Something went wrong retrieving the pdf')
 
     return {'communication_report': create_json_report(report)}
 
