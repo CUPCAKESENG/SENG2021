@@ -25,7 +25,6 @@ def get_data():
         Description: Gets data in the datastore.
     """
 
-    global DATA
     return DATA
 
 
@@ -42,6 +41,7 @@ def set_data(updated):
     DATA = updated
     with open('app/saves/data.p', 'wb+') as new_save:
         pickle.dump(DATA, new_save)
+        # print(f'\n\n/// Save change {DATA} \n') for debugging
 
 
 def clean_tokens():
@@ -52,22 +52,22 @@ def clean_tokens():
         Errors: N/A
         Description: Clears tokens that are expired from the data store every 10 minutes.
     """
-    datastore = get_data()
 
     time.sleep(60)  # Wait for datastore to be imported
+    global DATA
 
     while True:
-        for user in datastore['users']:
+        for user in DATA['users']:
             for token in user['sessions']:
                 try:
                     jwt.decode(token, SECRET, algorithms=['HS256'])
                 except jwt.ExpiredSignatureError as timeout:
-                    datastore['users'][user['user_id']
+                    DATA['users'][user['user_id']
                                        ]['sessions'].remove(token)
                     print(
                         f'\\\\\\ Token {token[:5]} has been cleared due to expiry')
 
-        set_data(datastore)
+        set_data(DATA)
         time.sleep(10*60)  # Run once every 10 minutes
 
 
