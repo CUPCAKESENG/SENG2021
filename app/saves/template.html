@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Communication Report</title>
+    <link
+      rel="stylesheet"
+      href="https://cupcake-invoicing.herokuapp.com/assets/comms/bootstrap/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="https://cupcake-invoicing.herokuapp.com/assets/comms/css/styles.min.css" />
+  </head>
+  <body
+    style="
+      background: linear-gradient(#4dd1f7, #1995d6);
+      background-size: cover;
+      background-repeat: no-repeat;
+    "
+  >
+    <div
+      class="card"
+      style="
+        width: 60%;
+        margin: auto;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.42);
+        margin-top: 5%;
+        font-size: 22px;
+      "
+    >
+      <div
+        class="card-body"
+        style="text-align: center; font-size: 22px; margin: 8px"
+      >
+        <img src="https://cupcake-invoicing.herokuapp.com/assets/comms/img/cupcake.svg" style="height: 6em" />
+        <h4 class="card-title" style="font-size: 32px">
+          <strong><em>Communication Report</em></strong
+          ><br />
+        </h4>
+        <h6 class="text-muted card-subtitle mb-2">Cupcake E-Invoicing</h6>
+        <p>
+          Your invoice was successfully received by Cupcake E-Invoicing Inc.<br />Please
+          view the confirmation details below for additional information.<br /><br />
+        </p>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p style="text-align: right"><strong>File:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p style="text-align: left">%Filename%.%FileType%</p>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p style="text-align: right"><strong>Filesize:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p style="text-align: left">%Filesize% bytes</p>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p style="text-align: right"><strong>Sender:</strong></p>
+            </div>
+            <div class="col-md-6"><p style="text-align: left">%Sender%</p></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p style="text-align: right"><strong>Time Received:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p style="text-align: left">%TimeRec%</p>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p style="text-align: right"><strong>Time Saved:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p style="text-align: left">%TimeSaved%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cupcake-invoicing.herokuapp.com/assets/comms/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

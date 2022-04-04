@@ -13,6 +13,7 @@ from app.src.helpers import decode_token
 from app.src.data_store import set_data, get_data
 from app.src.json_report import create_json_report
 from app.src.pdf_report import create_pdf_report
+from app.src.html_report import create_html_report
 
 
 def receive(token, invoice, output_format):
@@ -78,6 +79,16 @@ def receive(token, invoice, output_format):
         except Exception as e:
             print(e)
             raise AccessError('Something went wrong retrieving the pdf')
+    elif output_format == 2:
+        location = os.path.join(os.getcwd(), 'app', 'communication_report', create_html_report(report))
+
+        try:
+            print(location+'\n')
+            return send_file(location)
+        except Exception as e:
+            print(e)
+            raise AccessError('Something went wrong retrieving the html')
+
 
     return {'communication_report': create_json_report(report)}
 
