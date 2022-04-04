@@ -9,7 +9,7 @@ File: main.py
 
 import threading
 from json import dumps
-from flask import Flask, request
+from flask import Flask, render_template, request, send_from_directory
 from flask_cors import CORS
 # import json
 
@@ -23,7 +23,22 @@ CORS(app)
 
 @app.route('/')
 def index():
-  return "<h1>Cupcake</h1>"
+    return render_template('login.html')
+
+@app.route('/<path:path>')
+def send_html(path):
+    if path in ['index.html', 'login.html', 'register.html', 'table.html']:
+        return render_template(path)
+    else:
+        return render_template('404.html')
+
+@app.route('/assets/<path:path>')
+def send_assets(path):
+    return send_from_directory('templates/assets/', path)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 @app.route("/test", methods=["GET"])
 def test():
@@ -33,29 +48,35 @@ def test():
     return {"message": "testing"}
 
 
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register_user():
     """
     Register route
         Expected Input Payload: {email, password, firstname, lastname}
         Returns: {user_id, token}
     """
-    new_user = request.get_json()
-    ret = register(new_user['email'].lower(), new_user['password'],
-                   new_user['firstname'].lower(), new_user['lastname'].lower())
-    return dumps(ret)
+    if request.method == 'POST':
+        new_user = request.get_json()
+        ret = register(new_user['email'].lower(), new_user['password'],
+                    new_user['firstname'].lower(), new_user['lastname'].lower())
+        return dumps(ret)
+    else:
+        return render_template('register.html')
 
 
-@app.route('/login', methods=["POST"])
+@app.route('/login', methods=["GET", "POST"])
 def login_user():
     """
     Login route
         Expected Input Payload: {email, password}
         Returns: {user_id, token}
     """
-    info = request.get_json()
-    ret = login(info['email'].lower(), info['password'])
-    return dumps(ret)
+    if request.method == 'POST':
+        info = request.get_json()
+        ret = login(info['email'].lower(), info['password'])
+        return dumps(ret)
+    else:
+        return render_template('login.html')
 
 
 @app.route("/logout", methods=["POST"])
