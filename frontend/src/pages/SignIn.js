@@ -1,4 +1,4 @@
-import FormDefaultExample from "./components/form"
+import FormDefaultExample from "../components/form"
 import Button from '@atlaskit/button/standard-button';
 
 export const SignIn = (props) => {

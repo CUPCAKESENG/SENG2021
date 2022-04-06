@@ -1,6 +1,6 @@
-import { SignIn } from './SignIn';
-import { Dashboard } from './Dashboard';
-import { Register } from './Register';
+import { SignIn } from './pages/SignIn';
+import { Dashboard } from './pages/Dashboard';
+import { Register } from './pages/Register';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
