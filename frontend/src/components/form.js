@@ -39,10 +39,14 @@ const FormDefaultExample = (props) => {
 
       return res;
     })
+    .catch(err => {
+      console.log("error on login submission: ", err);
+    })
     return result;
   }
 
   const handleChangeUsername = async (data) => {
+
     const registrationDetails = {
       username: data.username,
       password: data.password
@@ -54,13 +58,16 @@ const FormDefaultExample = (props) => {
     }
 
     const result = await handleLoginRequest(loginCred);
+    console.log("V", result);
 
-    if(result.status === 200){
-      // login has been success
-      props.gotoRegister('/dashboard');
-    }else{
+    if(!result){
       // we actually get a 403 error from the server if the credentials are wrong
       console.log("incorrect credentials");
+      alert('incorrect creds');
+      
+    }else if(result.status === 200){
+      // login has been success
+      props.gotoRegister('/dashboard');
     }
   };
 
