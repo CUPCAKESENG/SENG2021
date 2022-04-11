@@ -24,6 +24,12 @@ export const RegisterForm = (props) => {
     console.log(data);
     props.navigate("/dashboard");
   }
+
+  const handleCancelClick = () => {
+    console.log("Cancel clicked");
+    props.navigate("/");
+  }
+
   return (
     <div
     style={{
@@ -36,7 +42,7 @@ export const RegisterForm = (props) => {
   >
       <Form
         onSubmit={(data) => {
-
+          console.log("submitted");
           handleRegistration(data);
           return new Promise((resolve) => setTimeout(resolve, 2000)).then(() =>
             data.username === 'error' ? { username: 'IN_USE' } : undefined,
@@ -139,7 +145,7 @@ export const RegisterForm = (props) => {
             <FormFooter>
               
               <ButtonGroup>
-                <Button appearance="subtle">Cancel</Button>
+                <Button onClick={handleCancelClick} appearance="subtle">Cancel</Button>
                 <LoadingButton
                   type="submit"
                   appearance="primary"
