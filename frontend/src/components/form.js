@@ -5,6 +5,7 @@ import LoadingButton from '@atlaskit/button/loading-button';
 import Button from '@atlaskit/button/standard-button';
 import { Checkbox } from '@atlaskit/checkbox';
 import TextField from '@atlaskit/textfield';
+import axios from 'axios';
 
 import Form, {
   CheckboxField,
@@ -25,8 +26,33 @@ const FormDefaultExample = (props) => {
       username: data.username,
       password: data.password
     }
+
+    const loginCred = {
+      email: data.username,
+      password: data.password
+    }
+
+    let result = axios.post('http://localhost:5000/login', loginCred)
+    .then(res => {
+      console.log("result: ", res);
+
+      return res;
+    })
+
+    console.log(`The saved result is ${result}`);
+    console.log('Testing 1, 2');
+
+    console.log(`The saved result is ${result}`);
+    console.log(`The saved result is ${result}`);
+    console.log(`The saved result is ${result}`);
+    console.log(`The saved result is ${result}`);
+
+
+    console.log(`\n\nThe username is ${data.username.toUpperCase()}\n\n`);
     props.onChange(registrationDetails);
-    props.gotoRegister('/dashboard');
+
+    // if res
+    // props.gotoRegister('/dashboard');
   };
 
   const handleRedirectRegister = () => {
