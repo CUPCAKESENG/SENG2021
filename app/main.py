@@ -158,12 +158,10 @@ def invoice_list():
         Expected Input Payload: {token}
         Returns: {message}
     """
-    if request.method == 'POST':
-        token = request.args.get('token')
-        response = list(token)
-        return dumps(response)
-    else:
-        return render_template('table.html')
+    token = request.args.get('token')
+    response = list(token)
+    return dumps(response)
+
 
 @app.route("/clear", methods=["DELETE"])
 def user_clear():

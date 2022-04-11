@@ -16,10 +16,18 @@ export const Dashboard = () => {
       })
   }
 
+  const getInvoices = () => {
+    axios.get('http://localhost:5000/invoice/list', {params: {token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6ImpvaG5hcHBsZXNlZWQiLCJ3aWxkY2FyZCI6LTQ5ODgsImV4cCI6MTY0OTY4MzEwMX0.8uHJv6OByXdVho0VdDHqasFVIrGFj7x2zROFiJPXe74'}})
+      .then(res => {
+        console.log("list: ", res);
+      })
+  }
+
   return (
     <>
       <text>Dashboard</text>
       <button onClick={handleButtonClick}>Test Button</button>
+      <button onClick={getInvoices}>Get invoices</button>
       <BasicList />
     </>
   )
