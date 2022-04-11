@@ -18,10 +18,31 @@ import Form, {
   ValidMessage,
 } from '@atlaskit/form';
 
+
+/*
+{
+    "email": "johnappleseed@apple.com",
+    "password": "12345678",
+    "firstname": "John",
+    "lastname": "Appleseed"
+}
+*/
+
+
 const FormDefaultExample = (props) => {
   
+  const handleLoginRequest = (loginCred) => {
+    console.log("inside handle login request");
+    let result = axios.post('http://localhost:5000/login', loginCred)
+    .then(res => {
+      console.log("result: ", res);
 
-  const handleChangeUsername = (data) => {
+      return res;
+    })
+    return result;
+  }
+
+  const handleChangeUsername = async (data) => {
     const registrationDetails = {
       username: data.username,
       password: data.password
@@ -32,27 +53,15 @@ const FormDefaultExample = (props) => {
       password: data.password
     }
 
-    let result = axios.post('http://localhost:5000/login', loginCred)
-    .then(res => {
-      console.log("result: ", res);
+    const result = await handleLoginRequest(loginCred);
 
-      return res;
-    })
-
-    console.log(`The saved result is ${result}`);
-    console.log('Testing 1, 2');
-
-    console.log(`The saved result is ${result}`);
-    console.log(`The saved result is ${result}`);
-    console.log(`The saved result is ${result}`);
-    console.log(`The saved result is ${result}`);
-
-
-    console.log(`\n\nThe username is ${data.username.toUpperCase()}\n\n`);
-    props.onChange(registrationDetails);
-
-    // if res
-    // props.gotoRegister('/dashboard');
+    if(result.status === 200){
+      // login has been success
+      props.gotoRegister('/dashboard');
+    }else{
+      // we actually get a 403 error from the server if the credentials are wrong
+      console.log("incorrect credentials");
+    }
   };
 
   const handleRedirectRegister = () => {
@@ -89,7 +98,7 @@ const FormDefaultExample = (props) => {
               name="username"
               label="Username"
               isRequired
-              defaultValue="dst12"
+              defaultValue="johnappleseed@apple.com"
             >
               {({ fieldProps, error }) => (
                 <Fragment>
