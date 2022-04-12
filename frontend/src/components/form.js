@@ -42,11 +42,6 @@ const FormDefaultExample = (props) => {
     console.log(`The saved result is ${result}`);
     console.log('Testing 1, 2');
 
-    console.log(`The saved result is ${result}`);
-    console.log(`The saved result is ${result}`);
-    console.log(`The saved result is ${result}`);
-    console.log(`The saved result is ${result}`);
-
 
     console.log(`\n\nThe username is ${data.username.toUpperCase()}\n\n`);
     props.onChange(registrationDetails);
