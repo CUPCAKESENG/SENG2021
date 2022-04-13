@@ -26,7 +26,8 @@ def register(email, password, firstname, lastname):
         'lastname': lastname,
         'username': firstname + lastname,
         'sessions': [],
-        'invoices': []
+        'invoices': [],
+        'graph': []
     }
 
     for user in datastore['users']:

@@ -17,6 +17,9 @@ from app.src.data_store import autosave, clean_tokens, clear
 from app.src.auth import register, login, logout
 from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
+from app.src.data_store import get_data
+from app.src.helpers import decode_token
+from app.src.error import AccessError
 
 app = Flask(__name__)
 CORS(app)
@@ -89,6 +92,26 @@ def logout_user():
     info = request.get_json()
     return dumps(logout(info['token']))
 
+@app.route("/user/graph", methods=["GET"])
+def fetch_data():
+    """
+    Graph Data route
+        Expected Input Payload: {token}
+        Returns: {List of tuples with cost information}
+
+        Each datapoint is in the format:
+            (received_time, currency, amount, sender)
+    """
+
+    token = request.args.get('token')
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    response = datastore['users'][user_id]['graph']
+    return dumps(response)
 
 @app.route("/invoice/receive", methods=["POST"])
 def invoice_receive():
