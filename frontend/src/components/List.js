@@ -8,69 +8,63 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import FaceIcon from '@mui/icons-material/Face';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function BasicList() {
+  const handleDashboardClick = () => {
+    console.log('Dashboard clicked');
+  }
+  const handleTransactionsClick = () => {
+    console.log('Transactions clicked');
+  }
+  const handleManageCountClick = () => {
+    console.log('ManageAccount clicked');
+  }
+  const handleLogoutClick = () => {
+    console.log('Logout clicked');
+  }
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: '100%', maxWidth: 250, height: '100%', bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
         <List>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={handleDashboardClick}>
             <ListItemButton>
               <ListItemIcon>
-                <InboxIcon />
+                <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Inbox" />
+              <ListItemText primary="Dashboard" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={handleTransactionsClick}>
             <ListItemButton>
               <ListItemIcon>
-                <DraftsIcon />
+                <ReceiptLongIcon />
               </ListItemIcon>
-              <ListItemText primary="Drafts" />
+              <ListItemText primary="Transactions" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={handleManageCountClick}>
             <ListItemButton>
               <ListItemIcon>
-                <DraftsIcon />
+                <FaceIcon />
               </ListItemIcon>
-              <ListItemText primary="Drafts" />
+              <ListItemText primary="Manage account" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={handleLogoutClick}>
             <ListItemButton>
               <ListItemIcon>
-                <DraftsIcon />
+                <LogoutIcon />
               </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
+              <ListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
         </List>
       </nav>
-      <Divider />
-      <nav aria-label="secondary mailbox folders">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Trash" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemText primary="Spam" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
+      
     </Box>
   );
 }

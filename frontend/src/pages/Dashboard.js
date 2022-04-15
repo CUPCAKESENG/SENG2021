@@ -25,7 +25,6 @@ export const Dashboard = () => {
 
   return (
     <>
-      <text>Dashboard</text>
       <button onClick={handleButtonClick}>Test Button</button>
       <button onClick={getInvoices}>Get invoices</button>
       <BasicList />
