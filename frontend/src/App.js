@@ -36,7 +36,7 @@ function Root() {
       <Routes>
         <Route path='/register' element={<Register navigate={navigate}/>}/>
         <Route path='/' element={<SignIn onChange={setRegisterDetails} testing={'test prop'} gotoRegister={navigate}/>} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/dashboard' element={<Dashboard />} display='flex'/>
       </Routes>
     </>
   );

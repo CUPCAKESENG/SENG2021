@@ -12,18 +12,8 @@ export const Dashboard = () => {
   const [viewTransactions, setViewTransactions] = useState(false);
   const [viewAccount, setViewAccount] = useState(false);
 
-  let currentPageView;
   useEffect(() => {
     console.log('useeffect triggered');
-
-    if(viewDashboard) {
-      currentPageView = (<DashboardData />);
-    } else if(viewTransactions) {
-      currentPageView = (<Transactions />);
-    } else if(viewAccount) {
-      currentPageView = (<ManageAccount />);
-    }
-    console.log("currentPageView: ", currentPageView);
   }, [viewDashboard, viewTransactions, viewAccount])
   
   const handleButtonClick = () => {
@@ -47,18 +37,30 @@ export const Dashboard = () => {
   }
 
   return (
-    <Grid container justify='flex-end'>
-      
-      <BasicList setViewDashboard={setViewDashboard} setViewTransactions={setViewTransactions} setViewAccount={setViewAccount}/>
+    <>
+    
+      <Grid container justify='flex-end' width='100vw' height='100vh' >
+        
+        <BasicList setViewDashboard={setViewDashboard} setViewTransactions={setViewTransactions} setViewAccount={setViewAccount}/>
 
-      {viewDashboard && <PageView component={<DashboardData />}/>}
-      {viewTransactions && <PageView component={<Transactions />}/>}
-      {viewAccount && <PageView component={<ManageAccount />}/>}
-      
-    </Grid>
+        {viewDashboard && <PageView component={<DashboardData />}/>}
+        {viewTransactions && <PageView component={<Transactions />}/>}
+        {viewAccount && <PageView component={<ManageAccount />}/>}
+        
+      </Grid>
+    </>
+    
   )
 }
 
 const dashboardLayoutStyle = {
   flexDirection: 'row'
+}
+
+const gridStyle = {
+  container: true,
+  width: '100vw',
+  height: '100vh',
+  spacing: 0,
+  justify: 'flex-end'
 }

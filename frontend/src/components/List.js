@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -14,6 +15,17 @@ import FaceIcon from '@mui/icons-material/Face';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function BasicList(props) {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    console.log("dimensions: ", width, height)
+    return {
+      width,
+      height
+    };
+  }
+
   const handleDashboardClick = () => {
     console.log('Dashboard clicked');
     props.setViewDashboard(true);
@@ -36,7 +48,7 @@ export default function BasicList(props) {
     console.log('Logout clicked');
   }
   return (
-    <Box sx={{ width: '100%', maxWidth: 250, height: 800, bgcolor: 'green' }}>
+    <Box sx={{ width: '25%', maxWidth: windowDimensions.width, height: windowDimensions.height, bgcolor: 'green' }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding onClick={handleDashboardClick}>
