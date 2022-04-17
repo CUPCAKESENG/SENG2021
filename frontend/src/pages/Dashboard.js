@@ -1,6 +1,6 @@
 import BasicList from "../components/List";
 import axios from 'axios';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Transactions } from "./Transactions";
 import { DashboardData } from "./DashboardData";
 import { ManageAccount } from "./ManageAccount";
@@ -12,6 +12,20 @@ export const Dashboard = () => {
   const [viewTransactions, setViewTransactions] = useState(false);
   const [viewAccount, setViewAccount] = useState(false);
 
+  let currentPageView;
+  useEffect(() => {
+    console.log('useeffect triggered');
+
+    if(viewDashboard) {
+      currentPageView = (<DashboardData />);
+    } else if(viewTransactions) {
+      currentPageView = (<Transactions />);
+    } else if(viewAccount) {
+      currentPageView = (<ManageAccount />);
+    }
+    console.log("currentPageView: ", currentPageView);
+  }, [viewDashboard, viewTransactions, viewAccount])
+  
   const handleButtonClick = () => {
     console.log("button clicked");
     const loginCred = {
@@ -37,22 +51,10 @@ export const Dashboard = () => {
       
       <BasicList setViewDashboard={setViewDashboard} setViewTransactions={setViewTransactions} setViewAccount={setViewAccount}/>
 
-      <PageView />
-
-      {viewDashboard && (
-        <DashboardData />
-      )}
-
-      {viewTransactions && (
-        <Transactions />
-      )}
-
-      {viewAccount && (
-        <ManageAccount />
-      )}
-
-      <button onClick={handleButtonClick}>Test Button</button>
-      <button onClick={getInvoices}>Get invoices</button>
+      {viewDashboard && <PageView component={<DashboardData />}/>}
+      {viewTransactions && <PageView component={<Transactions />}/>}
+      {viewAccount && <PageView component={<ManageAccount />}/>}
+      
     </Grid>
   )
 }
