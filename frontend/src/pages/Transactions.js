@@ -1,7 +1,9 @@
+import BasicTable from "../components/TableCell";
+
 export const Transactions = () => {
   return(
     <>
-    <text>Transactions</text>
+      <BasicTable />
     </>
   )
 }

@@ -15,9 +15,10 @@ export default function PageView(props) {
   }
 
   return (
-    <Box  sx={{ width: '75%', maxWidth: windowDimensions.width, height: windowDimensions.height, bgcolor: 'orange' }}>
+    <Box  sx={{ width: '75%', maxWidth: windowDimensions.width, height: windowDimensions.height, bgcolor: 'background.paper' }}>
 
       {props.component}
+      
     </Box>
   )
 }

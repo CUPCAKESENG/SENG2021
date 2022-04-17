@@ -48,7 +48,7 @@ export default function BasicList(props) {
     console.log('Logout clicked');
   }
   return (
-    <Box sx={{ width: '25%', maxWidth: windowDimensions.width, height: windowDimensions.height, bgcolor: 'green' }}>
+    <Box sx={{ width: '25%', maxWidth: windowDimensions.width, height: windowDimensions.height, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding onClick={handleDashboardClick}>
