@@ -1,7 +1,16 @@
 import BasicList from "../components/List";
 import axios from 'axios';
+import { useState } from "react";
+import { Transactions } from "./Transactions";
+import { DashboardData } from "./DashboardData";
+import { ManageAccount } from "./ManageAccount";
+import PageView from "../components/PageView";
+import { Grid } from '@material-ui/core';
 
 export const Dashboard = () => {
+  const [viewDashboard, setViewDashboard] = useState(true);
+  const [viewTransactions, setViewTransactions] = useState(false);
+  const [viewAccount, setViewAccount] = useState(false);
 
   const handleButtonClick = () => {
     console.log("button clicked");
@@ -24,10 +33,30 @@ export const Dashboard = () => {
   }
 
   return (
-    <>
+    <Grid container justify='flex-end'>
+      
+      <BasicList setViewDashboard={setViewDashboard} setViewTransactions={setViewTransactions} setViewAccount={setViewAccount}/>
+
+      <PageView />
+
+      {viewDashboard && (
+        <DashboardData />
+      )}
+
+      {viewTransactions && (
+        <Transactions />
+      )}
+
+      {viewAccount && (
+        <ManageAccount />
+      )}
+
       <button onClick={handleButtonClick}>Test Button</button>
       <button onClick={getInvoices}>Get invoices</button>
-      <BasicList />
-    </>
+    </Grid>
   )
+}
+
+const dashboardLayoutStyle = {
+  flexDirection: 'row'
 }

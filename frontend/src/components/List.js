@@ -13,21 +13,30 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import FaceIcon from '@mui/icons-material/Face';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-export default function BasicList() {
+export default function BasicList(props) {
   const handleDashboardClick = () => {
     console.log('Dashboard clicked');
+    props.setViewDashboard(true);
+    props.setViewTransactions(false);
+    props.setViewAccount(false);
   }
   const handleTransactionsClick = () => {
     console.log('Transactions clicked');
+    props.setViewDashboard(false);
+    props.setViewTransactions(true);
+    props.setViewAccount(false);
   }
   const handleManageCountClick = () => {
     console.log('ManageAccount clicked');
+    props.setViewDashboard(false);
+    props.setViewTransactions(false);
+    props.setViewAccount(true);
   }
   const handleLogoutClick = () => {
     console.log('Logout clicked');
   }
   return (
-    <Box sx={{ width: '100%', maxWidth: 250, height: '100%', bgcolor: 'background.paper' }}>
+    <Box sx={{ width: '100%', maxWidth: 250, height: 800, bgcolor: 'green' }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding onClick={handleDashboardClick}>
