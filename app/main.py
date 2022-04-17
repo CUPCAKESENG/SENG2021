@@ -30,7 +30,7 @@ def index():
 
 @app.route('/<path:path>')
 def send_html(path):
-    if path in ['index.html', 'login.html', 'register.html', 'table.html']:
+    if path in ['index.html', 'login.html', 'register.html', 'table.html', 'error.html']:
         return render_template(path)
     else:
         return render_template('404.html')

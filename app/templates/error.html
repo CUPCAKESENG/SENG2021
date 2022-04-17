@@ -4,12 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login - Cupcake</title>
+    <title>Error - Cupcake</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
     <link rel="stylesheet" href="assets/css/untitled.css">
 </head>
 
@@ -21,22 +19,23 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-flex">
-                                <div class="flex-grow-1 bg-login-image" style="background: url(&quot;assets/img/zaroor.png&quot;);background-size: cover;"></div>
+                                <div class="flex-grow-1 bg-login-image" style="background: url(&quot;assets/img/darakht.jpg&quot;);background-size: cover;"></div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
+                                    <div style="display: flex;justify-content: center;padding: 24px;"><i class="material-icons" style="font-size: 74px;color: var(--bs-red);">error</i></div>
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                        <h4 class="text-dark mb-4" style="font-weight: bold;font-style: italic;">Uh oh!<br>There was an error in registration</h4>
+                                        <div class="alert alert-success" role="alert" style="color: var(--bs-red);border-style: none;background: rgba(255,255,255,0);"><span id="replace">Error Text</span></div>
                                     </div>
                                     <form class="user">
-                                        <div class="mb-3"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Your Email" name="email" onblur="getEmail()"></div>
-                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password" onblur="getPassword()"></div>
+                                        <div class="mb-3"></div>
+                                        <div class="mb-3"></div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small"></div>
-                                        </div><a class="btn btn-primary d-block btn-user w-100" type="submit" style="color: white;background: #1995d6;font-weight: bold;font-size: 12.8px;--bs-primary: #1995d6;--bs-primary-rgb: 25,149,214;border: 4px none #1995d6;" id="loginButton" onclick="login();">Login</a>
-                                        <hr>
+                                        </div><a href="#" id="try_again" class="btn btn-primary d-block btn-user w-100" type="submit" style="color: white;background: #1995d6;font-weight: bold;font-size: 12.8px;--bs-primary: #1995d6;--bs-primary-rgb: 25,149,214;border: 4px none #1995d6;">Try again</a>
                                     </form>
-                                    <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
+                                    <div class="text-center"></div>
                                 </div>
                             </div>
                         </div>
@@ -46,9 +45,8 @@
         </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="assets/js/login.js"></script>
+    <script src="assets/js/error.js"></script>
 </body>
 
 </html>
