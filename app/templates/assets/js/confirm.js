@@ -5,12 +5,10 @@ function getCookie(name) {
 	if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-function init() {
+function checkLoggedIn() {
 	if (getCookie('token') == '') {
 		window.location.href = '/login.html'
 	}
 }
 
-document.addEventListener("DOMContentLoaded", () => {  
-	window.onload = init
-});
+checkLoggedIn()

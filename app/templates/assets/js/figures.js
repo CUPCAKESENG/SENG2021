@@ -94,8 +94,8 @@ async function getData() {
 			pie_chart.data.labels = pie_labels
 			pie_chart.data.datasets[0].data = pie_data
 
-			document.getElementById('earnings-today').innerHTML = `${currency} ${today}`
-			document.getElementById('earnings-total').innerHTML = `${currency} ${total}`
+			document.getElementById('earnings-today').innerHTML = `${currency} ${today.toFixed(2)}`
+			document.getElementById('earnings-total').innerHTML = `${currency} ${total.toFixed(2)}`
 			document.getElementById('total-invoices').innerHTML = data.length;
 
 			line_chart.data.labels = labels
