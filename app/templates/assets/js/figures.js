@@ -66,7 +66,9 @@ async function getData() {
 					today = today + parseFloat(invoice[5])
 				}
 
-				labels.push(invoice[2].split(',')[1].slice(0,-7))
+				formatted_date = invoice[2].split(',')[0].slice(0,-5) + ' -' + invoice[2].split(',')[1].slice(0,-7)
+
+				labels.push(formatted_date)
 
 				if (values.length === 0) {
 					values.push(parseFloat(invoice[5]))

@@ -7,6 +7,7 @@ File: main.py
     Description: Defines routes for the server
 """
 
+import email
 import threading
 from json import dumps
 from flask import Flask, render_template, request, send_from_directory
@@ -30,7 +31,7 @@ def index():
 
 @app.route('/<path:path>')
 def send_html(path):
-    if path in ['index.html', 'login.html', 'register.html', 'table.html', 'error.html']:
+    if path in ['index.html', 'login.html', 'register.html', 'table.html', 'error.html', 'send.html']:
         return render_template(path)
     else:
         return render_template('404.html')
@@ -134,6 +135,30 @@ def fetch_name():
 
     response = {
         'name': f"{datastore['users'][user_id]['firstname'].capitalize()} {datastore['users'][user_id]['lastname'].capitalize()}"
+    }
+    return dumps(response)
+
+@app.route("/user/list", methods=["GET"])
+def fetch_users():
+    """
+    List users route
+        Returns: {usernames}
+    """
+
+    token = request.args.get('token')
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    usernames = []
+
+    for user in datastore['users']:
+        usernames.append(user['email'])
+
+    response = {
+        'usernames': usernames
     }
     return dumps(response)
 

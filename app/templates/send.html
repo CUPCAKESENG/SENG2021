@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Page Not Found | Cupcake</title>
+    <title>Send | Cupcake</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -58,12 +58,32 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <div class="text-center mt-5">
-                        <div class="error mx-auto" data-text="404">
-                            <p class="m-0">404</p>
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <h3 class="text-dark mb-0">Send</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5>Recipient</h5>
+                            <form>
+                                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="background: #1a96d7;text-align: center;border-style: none;" id="select-user-text" onclick="getNames()">Select</button>
+                                    <div class="dropdown-menu" id="select-user">
+                                        <a class="dropdown-item" href="#">First Item</a>
+                                        <a class="dropdown-item" href="#">Second Item</a>
+                                        <a class="dropdown-item" href="#">Third Item</a>
+                                    </div>
+                                </div>
+                                <h5 style="margin-top: 20px;">File</h5><input class="form-control" type="file">
+                                <h5 style="margin-top: 20px;">Currency</h5>
+                                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="background: rgb(26,150,215);border-style: none;" id="select-currency-text">Select</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" onclick="setCurrency()">AUD</a>
+                                        <!-- <a class="dropdown-item" href="#">Second Item</a>
+                                        <a class="dropdown-item" href="#">Third Item</a> -->
+                                    </div>
+                                </div>
+                                <h5 style="margin-top: 20px;">Amount</h5><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Amount" name="amount" style="display: block;width: 100%;padding: .375rem .75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #858796;background-color: #fff;background-clip: padding-box;border: 1px solid #d1d3e2;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: .35rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;"><button class="btn btn-primary" type="button" style="margin-top: 20px;width: 100%;background: rgb(26,150,215);border-style: none;">Submit</button>
+                            </form>
                         </div>
-                        <p class="text-dark mb-5 lead">Page Not Found</p>
-                        <p class="text-black-50 mb-0">It looks like you found a glitch in the matrix...</p><a href="/index.html">← Back to Dashboard</a>
                     </div>
                 </div>
             </div>
@@ -75,9 +95,9 @@
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/index.js"></script>
+    <script src="assets/js/send.js"></script>
 </body>
 
 </html>
