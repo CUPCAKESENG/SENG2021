@@ -7,7 +7,7 @@ File: wsgi.py
 import sys
 import os
 
-from app.main import app
+from app.main import application
 
 def clear_files(folder):
     for filename in os.listdir(folder):
@@ -29,4 +29,4 @@ if __name__ == "__main__":
             print('/// Cleared old save files')
             
 
-    app.run(debug=True)
+    application.run(debug=True)

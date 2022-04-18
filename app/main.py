@@ -21,29 +21,29 @@ from app.src.data_store import get_data
 from app.src.helpers import decode_token
 from app.src.error import AccessError
 
-app = Flask(__name__)
-CORS(app)
+application = Flask(__name__)
+CORS(application)
 
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('login.html')
 
-@app.route('/<path:path>')
+@application.route('/<path:path>')
 def send_html(path):
     if path in ['index.html', 'login.html', 'register.html', 'table.html', 'error.html']:
         return render_template(path)
     else:
         return render_template('404.html')
 
-@app.route('/assets/<path:path>')
+@application.route('/assets/<path:path>')
 def send_assets(path):
     return send_from_directory('templates/assets/', path)
 
-@app.errorhandler(404)
+@application.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
-@app.route("/test", methods=["GET"])
+@application.route("/test", methods=["GET"])
 def test():
     """
     Test Route
@@ -51,7 +51,7 @@ def test():
     return {"message": "testing"}
 
 
-@app.route("/register", methods=["GET", "POST"])
+@application.route("/register", methods=["GET", "POST"])
 def register_user():
     """
     Register route
@@ -67,7 +67,7 @@ def register_user():
         return render_template('register.html')
 
 
-@app.route('/login', methods=["GET", "POST"])
+@application.route('/login', methods=["GET", "POST"])
 def login_user():
     """
     Login route
@@ -82,7 +82,7 @@ def login_user():
         return render_template('login.html')
 
 
-@app.route("/logout", methods=["POST"])
+@application.route("/logout", methods=["POST"])
 def logout_user():
     """
     Logout route
@@ -92,7 +92,7 @@ def logout_user():
     info = request.get_json()
     return dumps(logout(info['token']))
 
-@app.route("/user/graph", methods=["GET"])
+@application.route("/user/graph", methods=["GET"])
 def fetch_data():
     """
     Graph Data route
@@ -113,7 +113,7 @@ def fetch_data():
     response = datastore['users'][user_id]['graph']
     return dumps(response)
 
-@app.route("/user/name", methods=["GET"])
+@application.route("/user/name", methods=["GET"])
 def fetch_name():
     """
     Graph Data route
@@ -133,7 +133,7 @@ def fetch_name():
     }
     return dumps(response)
 
-@app.route("/invoice/receive", methods=["POST"])
+@application.route("/invoice/receive", methods=["POST"])
 def invoice_receive():
     """
     Receive route
@@ -156,7 +156,7 @@ def invoice_receive():
     else:
         return dumps(ret)
 
-@app.route("/invoice/update", methods=["POST"])
+@application.route("/invoice/update", methods=["POST"])
 def invoice_update():
     """
     Receive route
@@ -179,7 +179,7 @@ def invoice_update():
     ret = update(token, invoice, invoice_id)
     return dumps(ret)
 
-@app.route("/invoice/delete", methods=["DELETE"])
+@application.route("/invoice/delete", methods=["DELETE"])
 def invoice_delete():
     """
     Delete route
@@ -194,7 +194,7 @@ def invoice_delete():
 
     return dumps(delete(info['token'], info['invoice_id']))
 
-@app.route("/invoice/list", methods=["GET"])
+@application.route("/invoice/list", methods=["GET"])
 def invoice_list():
     """
     Logout route
@@ -205,7 +205,7 @@ def invoice_list():
     response = list(token)
     return dumps(response)
 
-@app.route("/clear", methods=["DELETE"])
+@application.route("/clear", methods=["DELETE"])
 def user_clear():
     return dumps(clear())
 
