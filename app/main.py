@@ -35,6 +35,10 @@ def send_html(path):
     else:
         return render_template('404.html')
 
+@app.route('/invoice/<path:filename>')
+def download_invoice(filename):
+    return send_from_directory('invoices_received/', filename, as_attachment=True)
+
 @app.route('/assets/<path:path>')
 def send_assets(path):
     return send_from_directory('templates/assets/', path)

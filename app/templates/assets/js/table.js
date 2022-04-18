@@ -1,3 +1,7 @@
+function refresh() {
+	getData()
+}
+
 async function getData() {
 	const response = await fetch(`/user/graph?token=${getCookie('token')}`, {
 		method: 'GET',
@@ -11,10 +15,14 @@ async function getData() {
 				return
 			}
 
+			let invoice_list = ''
+
 			for (const invoice of data) {
-				let current = document.getElementById('invoices').innerHTML;
-				let complete = `${current}\n<tr>
-				<td><img class="rounded-circle me-2" width="30" height="30" src="assets/img/avatars/person.png">${invoice[0]}</td>
+				let complete = `\n<tr>
+				<td>
+					<img class="rounded-circle me-2" width="30" height="30" src="assets/img/avatars/person.png">
+					<a href='/invoice/${invoice[0]}'>${invoice[0]}</a>
+				</td>
 				<td>${invoice[6]}</td>
 				<td>${invoice[1]} bytes</td>
 				<td>${invoice[2]}<br></td>
@@ -22,8 +30,10 @@ async function getData() {
 				<td>${invoice[4]} ${invoice[5]}</td>
 				</tr>`;
 
-				document.getElementById('invoices').innerHTML = complete
+				invoice_list = invoice_list + complete
 			}
+			
+			document.getElementById('invoices').innerHTML = invoice_list
 
 		});
 	} else {

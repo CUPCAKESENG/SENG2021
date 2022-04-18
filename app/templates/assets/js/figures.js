@@ -40,6 +40,10 @@ function getDate() {
 	return today
 }
 
+function refresh() {
+	getData()
+}
+
 async function getData() {
 	const response = await fetch(`/user/graph?token=${getCookie('token')}`, {
 		method: 'GET',
@@ -79,11 +83,16 @@ async function getData() {
 				}
 			}
 
+			let pie_labels = []
+			let pie_data = []
 
 			for (const [key, value] of Object.entries(contributors)) {
-				pie_chart.data.labels.push(key)
-				pie_chart.data.datasets[0].data.push((value / total).toFixed(2))
+				pie_labels.push(key)
+				pie_data.push((value / total).toFixed(2))
 			}
+
+			pie_chart.data.labels = pie_labels
+			pie_chart.data.datasets[0].data = pie_data
 
 			document.getElementById('earnings-today').innerHTML = `${currency} ${today}`
 			document.getElementById('earnings-total').innerHTML = `${currency} ${total}`
