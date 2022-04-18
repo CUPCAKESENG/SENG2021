@@ -113,6 +113,26 @@ def fetch_data():
     response = datastore['users'][user_id]['graph']
     return dumps(response)
 
+@app.route("/user/name", methods=["GET"])
+def fetch_name():
+    """
+    Graph Data route
+        Expected Input Payload: {token}
+        Returns: {name}
+    """
+
+    token = request.args.get('token')
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    response = {
+        'name': f"{datastore['users'][user_id]['firstname'].capitalize()} {datastore['users'][user_id]['lastname'].capitalize()}"
+    }
+    return dumps(response)
+
 @app.route("/invoice/receive", methods=["POST"])
 def invoice_receive():
     """

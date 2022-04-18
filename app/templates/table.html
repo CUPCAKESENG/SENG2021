@@ -50,8 +50,8 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">John Appleseed</span><img class="border rounded-circle img-profile" src="assets/img/avatars/user.jpg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" id="username">John Appleseed</span><img class="border rounded-circle img-profile" src="assets/img/avatars/user.jpg"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>
@@ -178,7 +178,7 @@
                                             <td><strong>Filesize</strong></td>
                                             <td><strong>Time Received</strong></td>
                                             <td><strong>Time Saved</strong></td>
-                                            <td><strong>Notes</strong></td>
+                                            <td><strong>Cost</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -197,6 +197,7 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/index.js"></script>
 </body>
 
 </html>
