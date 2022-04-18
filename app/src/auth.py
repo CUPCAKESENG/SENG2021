@@ -26,13 +26,14 @@ def register(email, password, firstname, lastname):
         'lastname': lastname,
         'username': firstname + lastname,
         'sessions': [],
-        'invoices': []
+        'invoices': [],
+        'graph': []
     }
 
     for user in datastore['users']:
         if new_user['email'] == user['email']:
             raise AccessError(
-                'This email is already registered. Please login instead.')
+                'This email is already registered. Please login or register a different email.')
 
     new_user['user_id'] = len(datastore['users'])
 

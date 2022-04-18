@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Register - Cupcake</title>
+    <title>Register | Cupcake</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -28,10 +28,10 @@
                             </div>
                             <form class="user">
                                 <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="First Name" name="first_name"></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Last Name" name="last_name"></div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="First Name (Required)" name="first_name" onblur="getFirstName()"></div>
+                                    <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Last Name (Required)" name="last_name" onblur="getLastName()"></div>
                                 </div>
-                                <div class="mb-3"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email Address" name="email"></div><input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Password" name="password"><a class="btn btn-primary d-block btn-user w-100" type="submit" style="background: #1995d6;margin-top: 2.5%;" href="index.html">Register Account</a>
+                                <div class="mb-3"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email Address (Required)" name="email" onblur="getEmail()"></div><input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Password (Required)" name="password" onblur="getPassword()"><a class="btn btn-primary d-block btn-user w-100" type="submit" style="background: #1995d6;margin-top: 2.5%;" onclick="register()">Register Account</a>
                                 <hr>
                             </form>
                             <div class="text-center"></div>
@@ -45,11 +45,7 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script>
-        function registerPlease() {  
-          window.location.href="index.html";  
-        }
-    </script>
+    <script src="assets/js/register.js"></script>
 </body>
 
 </html>

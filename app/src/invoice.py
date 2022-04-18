@@ -4,6 +4,7 @@ File: invoice.py
     Description: Defines the invoice functions
 """
 import os
+import re
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask import send_file
@@ -52,29 +53,67 @@ def receive(token, invoice, output_format):
         os.mkdir('app/invoices_received')
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
-    save_time = datetime.now()
 
+    save_time = datetime.now()
+    filesize = os.path.getsize(save_path)
+
+    sender = ''
+    currency = ''
+    amount = ''
+
+    try:
+        with open(save_path, 'r') as new_invoice:
+            while True:
+                info = new_invoice.readline()
+
+                if not info:
+                    break;
+
+                # print(info)
+                if '<cac:AccountingSupplierParty>' in info:
+                    while not ('cbc:Name' in info):
+                        info = new_invoice.readline()
+                    sender = re.search(r">(.+)<", info).group(1)
+
+                if '<cbc:TaxInclusiveAmount' in info:
+                    currency = re.search(r"currencyID=\"([a-zA-Z]{3})\"", info).group(1)
+                    amount = re.search(r">(\d*\.?\d+)<", info).group(1)
+
+                    if not datastore['users'][user_id]['graph']:
+                        datastore['users'][user_id]['graph'] = []
+                    
+                    datapoint = (filename, filesize, received_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3], save_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3], currency, amount, sender)
+
+                    datastore['users'][user_id]['graph'].append(datapoint)
+                    # print('\n\n\nThe graph is - ')
+                    # print(datastore['users'][user_id]['graph'])
+                    # print('\n\n\n')
+    except Exception as e:
+        os.remove(save_path)
+        print(e)
+        raise FormatError('The file sent did not match the expected e-invoice format. Please try again.')
+   
     report = {
         'path': save_path,
         'filename': filename,
         'id': len(datastore['users'][user_id]['invoices']),
-        'sender': f"{datastore['users'][user_id]['firstname'].capitalize()} {datastore['users'][user_id]['lastname'].capitalize()}",
+        'sender': f"{sender.capitalize()}",
         'received_time': received_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3],
         'save_time': save_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3],
         'output_format': output_format,
-        'file_size': f"{os.path.getsize(save_path)} bytes",
-        'deleted': False
+        'file_size': f"{filesize} bytes",
+        'deleted': False,
+        'currency': currency,
+        'amount': amount
     }
 
     datastore['users'][user_id]['invoices'].append(report)
-    # print('Receive is the issue')
     set_data(datastore)
 
     if output_format == 1:
         location = os.path.join(os.getcwd(), 'app', 'communication_report', create_pdf_report(report))
 
         try:
-            # print(location+'\n')
             return send_file(location, as_attachment=True)
         except Exception as e:
             print(e)

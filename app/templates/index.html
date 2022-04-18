@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Cupcake</title>
+    <title>Dashboard | Cupcake</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -16,18 +16,18 @@
 <body id="page-top">
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#1995d6 0%, #4dd1f7 100%), #1995d6;">
-            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="/">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="index.html">
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-file-invoice-dollar"></i></div>
                     <div class="sidebar-brand-text mx-3"><span>Cupcake</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <!-- <li class="nav-item"></li> -->
                     <li class="nav-item"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
-                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="send.html"><i class="fa fa-envelope-o"></i><span>Send</span></a></li>
+                    <!-- <li class="nav-item"></li>
+                    <li class="nav-item"></li> -->
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -50,8 +50,8 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">John Appleseed</span><img class="border rounded-circle img-profile" src="assets/img/avatars/user.jpg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" id="username">John Appleseed</span><img class="border rounded-circle img-profile" src="assets/img/avatars/user.jpg"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#" id="logout" onclick="logout()"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>
@@ -67,8 +67,8 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Earnings (monthly)</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>$21141.67</span></div>
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Earnings (Today)</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span id="earnings-today">-</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                                     </div>
@@ -80,8 +80,8 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Earnings (annual)</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>$21141.67</span></div>
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Earnings (Total)</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span id="earnings-total">-</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                                     </div>
@@ -90,11 +90,11 @@
                         </div>
                         <div class="col-md-6 col-xl-3 mb-4">
                             <div class="card shadow border-start-warning py-2" style="width: 25vw;margin-left: 10vw;">
-                                <div class="card-body" style="width: 300px;">
+                                <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Total Requests</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>36</span></div>
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Total Invoices</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span id="total-invoices">-</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                     </div>
@@ -107,15 +107,14 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h6 class="text-primary fw-bold m-0">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i style="font-size: 1.6em;" class="fa fa-refresh text-gray-600"></i></button>
                                         <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                            <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
+                                            <p class="text-center dropdown-header">Options:</p><a class="dropdown-item" onclick="refresh()">&nbsp;Refresh</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;15:30&quot;,&quot;15:35&quot;,&quot;15:40&quot;,&quot;15:45&quot;,&quot;15:50&quot;,&quot;15:55&quot;,&quot;16:00&quot;,&quot;16:05&quot;,&quot;16:10&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;2847.28&quot;,&quot;5937.28&quot;,&quot;5937.28&quot;,&quot;13040.08&quot;,&quot;20969.08&quot;,&quot;20969.08&quot;,&quot;21086.68&quot;,&quot;21141.67&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                    <div class="chart-area"><canvas id="revenue-chart"></canvas></div>
                                 </div>
                             </div>
                         </div>
@@ -123,16 +122,15 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h6 class="text-primary fw-bold m-0">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i style="font-size: 1.6em;" class="fa fa-refresh text-gray-600"></i></button>
                                         <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                            <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
+                                            <p class="text-center dropdown-header">Options:</p><a class="dropdown-item" onclick="refresh()">&nbsp;Refresh</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Tim Apple&quot;,&quot;Jensen Huang&quot;,&quot;Lisa Su&quot;,&quot;Satya Nadella&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;,&quot;rgb(218,131,0)&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;47.05&quot;,&quot;14.93&quot;,&quot;36.55&quot;,&quot;1.46&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}"></canvas></div>
-                                    <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Tim</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Jensen</span><span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;Lisa</span><span class="me-2"><i class="fas fa-circle text-info" style="color: rgb(218,131,0)!important;"></i>&nbsp;Satya</span></div>
+                                    <div class="chart-area"><canvas id="share-chart" data-bss-chart=""></canvas></div>
+                                    <!-- <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Tim</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Jensen</span><span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;Lisa</span><span class="me-2"><i class="fas fa-circle text-info" style="color: rgb(218,131,0)!important;"></i>&nbsp;Satya</span></div> -->
                                 </div>
                             </div>
                         </div>
@@ -184,6 +182,9 @@
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/figures.js"></script>
+    <script src="assets/js/confirm.js"></script>
 </body>
 
 </html>

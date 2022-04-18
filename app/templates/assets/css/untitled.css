@@ -1,0 +1,8 @@
+.is_invalid {
+	background-color: #ffe8e8;
+	border: 1px solid rgb(164, 0, 0);
+}
+
+.is_invalid::placeholder {
+	color: rgb(164, 0, 0)!important;
+}

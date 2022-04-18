@@ -7,6 +7,7 @@ File: main.py
     Description: Defines routes for the server
 """
 
+import email
 import threading
 from json import dumps
 from flask import Flask, render_template, request, send_from_directory
@@ -17,6 +18,9 @@ from app.src.data_store import autosave, clean_tokens, clear
 from app.src.auth import register, login, logout
 from app.src.error import PayloadError
 from app.src.invoice import receive, update, delete, list
+from app.src.data_store import get_data
+from app.src.helpers import decode_token
+from app.src.error import AccessError
 
 app = Flask(__name__)
 CORS(app)
@@ -27,10 +31,14 @@ def index():
 
 @app.route('/<path:path>')
 def send_html(path):
-    if path in ['index.html', 'login.html', 'register.html', 'table.html']:
+    if path in ['index.html', 'login.html', 'register.html', 'table.html', 'error.html', 'send.html']:
         return render_template(path)
     else:
         return render_template('404.html')
+
+@app.route('/invoice/<path:filename>')
+def download_invoice(filename):
+    return send_from_directory('invoices_received/', filename, as_attachment=True)
 
 @app.route('/assets/<path:path>')
 def send_assets(path):
@@ -89,6 +97,70 @@ def logout_user():
     info = request.get_json()
     return dumps(logout(info['token']))
 
+@app.route("/user/graph", methods=["GET"])
+def fetch_data():
+    """
+    Graph Data route
+        Expected Input Payload: {token}
+        Returns: {List of tuples with cost information}
+
+        Each datapoint is in the format:
+            (filename, filesize, received_time, save_time, currency, amount, sender)
+    """
+
+    token = request.args.get('token')
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    response = datastore['users'][user_id]['graph']
+    return dumps(response)
+
+@app.route("/user/name", methods=["GET"])
+def fetch_name():
+    """
+    Graph Data route
+        Expected Input Payload: {token}
+        Returns: {name}
+    """
+
+    token = request.args.get('token')
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    response = {
+        'name': f"{datastore['users'][user_id]['firstname'].capitalize()} {datastore['users'][user_id]['lastname'].capitalize()}"
+    }
+    return dumps(response)
+
+@app.route("/user/list", methods=["GET"])
+def fetch_users():
+    """
+    List users route
+        Returns: {usernames}
+    """
+
+    token = request.args.get('token')
+    datastore = get_data()
+    user_id = decode_token(token)['id']
+
+    if not user_id in range(len(datastore['users'])):
+        raise AccessError('Invalid user ID or token')
+
+    usernames = []
+
+    for user in datastore['users']:
+        usernames.append(user['email'])
+
+    response = {
+        'usernames': usernames
+    }
+    return dumps(response)
 
 @app.route("/invoice/receive", methods=["POST"])
 def invoice_receive():
@@ -97,11 +169,13 @@ def invoice_receive():
         Expected Input Payload: {token, invoice, output_format}
         Returns: {communication_report}
     """
+
+    print(request.form['token'])
     
     try:
-        token = request.form['token']
-        invoice = request.files['invoice']
+        token = request.form['token'].strip('"')
         output_format = request.form['output_format']
+        invoice = request.files['invoice']
     except Exception as e:
         raise PayloadError(
             'Invalid receipt request, please send token, invoice and output_format as form fields') from e
