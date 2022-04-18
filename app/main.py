@@ -100,7 +100,7 @@ def fetch_data():
         Returns: {List of tuples with cost information}
 
         Each datapoint is in the format:
-            (received_time, currency, amount, sender)
+            (filename, filesize, received_time, save_time, currency, amount, sender)
     """
 
     token = request.args.get('token')

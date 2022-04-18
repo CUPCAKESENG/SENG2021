@@ -115,6 +115,7 @@ async function login() {
 function storeToken(data) {
 	document.cookie = `token=${data.token}; path=/; max-age=${60 * 60}; samesite=strict;`
 	console.log(document.cookie);
+	console.log('Token is set');
 }
 
 document.addEventListener("DOMContentLoaded", () => {  

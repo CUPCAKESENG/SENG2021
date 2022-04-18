@@ -15,9 +15,8 @@ async function setName() {
 		method: 'GET',
 		headers: {'Content-Type': 'application/json'},
 	});
-
+	
 	response.json().then(data => {
-		console.log(data);
 		document.getElementById('username').innerHTML = data.name;
 		document.getElementById('username').classList.remove('d-none')
 	});
@@ -25,8 +24,6 @@ async function setName() {
 
 function init() {
 	setName()
-
-	
 }
 
 document.addEventListener("DOMContentLoaded", () => {  

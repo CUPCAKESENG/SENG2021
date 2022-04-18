@@ -54,6 +54,9 @@ def receive(token, invoice, output_format):
     save_path = os.path.join('app/invoices_received', filename)
     invoice.save(save_path)
 
+    save_time = datetime.now()
+    filesize = os.path.getsize(save_path)
+
     sender = ''
     currency = ''
     amount = ''
@@ -79,7 +82,7 @@ def receive(token, invoice, output_format):
                     if not datastore['users'][user_id]['graph']:
                         datastore['users'][user_id]['graph'] = []
                     
-                    datapoint = (received_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3], currency, amount, sender)
+                    datapoint = (filename, filesize, received_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3], save_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3], currency, amount, sender)
 
                     datastore['users'][user_id]['graph'].append(datapoint)
                     # print('\n\n\nThe graph is - ')
@@ -90,18 +93,18 @@ def receive(token, invoice, output_format):
         print(e)
         raise FormatError('The file sent did not match the expected e-invoice format. Please try again.')
    
-    save_time = datetime.now()
-
     report = {
         'path': save_path,
         'filename': filename,
         'id': len(datastore['users'][user_id]['invoices']),
-        'sender': f"{datastore['users'][user_id]['firstname'].capitalize()} {datastore['users'][user_id]['lastname'].capitalize()}",
+        'sender': f"{sender.capitalize()}",
         'received_time': received_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3],
         'save_time': save_time.strftime('%m/%d/%Y, %H:%M:%S.%f')[:-3],
         'output_format': output_format,
-        'file_size': f"{os.path.getsize(save_path)} bytes",
-        'deleted': False
+        'file_size': f"{filesize} bytes",
+        'deleted': False,
+        'currency': currency,
+        'amount': amount
     }
 
     datastore['users'][user_id]['invoices'].append(report)
