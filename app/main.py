@@ -169,11 +169,13 @@ def invoice_receive():
         Expected Input Payload: {token, invoice, output_format}
         Returns: {communication_report}
     """
+
+    print(request.form['token'])
     
     try:
-        token = request.form['token']
-        invoice = request.files['invoice']
+        token = request.form['token'].strip('"')
         output_format = request.form['output_format']
+        invoice = request.files['invoice']
     except Exception as e:
         raise PayloadError(
             'Invalid receipt request, please send token, invoice and output_format as form fields') from e

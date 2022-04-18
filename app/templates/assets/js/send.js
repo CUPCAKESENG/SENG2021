@@ -5,11 +5,44 @@ let amount = ''
 function reset() {
 	document.getElementById('select-user-text').innerHTML = 'Select'
 	document.getElementById('select-currency-text').innerHTML = 'Select'
+	document.getElementById('invoice-file').value = ''
+	document.querySelector('input[name="amount"]').value = ''
 }
 
 function setCurrency() {
 	currency = 'AUD'
 	document.getElementById('select-currency-text').innerHTML = 'AUD'
+}
+
+function setUser(username) {
+	recipient = username
+	document.getElementById('select-user-text').innerHTML = username
+}
+
+function setAmount() {
+	amount = document.querySelector('input[name="amount"]').value;
+	
+	console.log(amount);
+}
+
+async function sendInvoice() {
+    let token = getCookie('token');
+	let output_format = 0
+    let formData = new FormData();
+    let invoice = document.getElementById("invoice-file").files[0];      
+         
+    formData.append("invoice", invoice);
+    formData.append("token", JSON.stringify(token)); 
+	formData.append("output_format", output_format);
+
+    let response = await fetch('/invoice/receive', {
+		method: "POST",
+		body: formData
+	});
+	
+	if (response.status == 200) {
+		console.log('HTTP response code:', response.status); 
+	}
 }
 
 async function getNames() {
@@ -23,7 +56,7 @@ async function getNames() {
 			users = ''
 
 			for (const username of data.usernames) {
-				elem = `<a class="dropdown-item" onclick="setUser()">${username}</a>\n`
+				elem = `<a class="dropdown-item" id="${username}" onclick="setUser(this.id)">${username}</a>\n`
 				users += elem
 			}
 
